@@ -1,0 +1,34 @@
+pull_request_rules:
+  - name: ✔️ Automatic merge on pull request approval
+    conditions:
+      - approved-reviews-by>=1
+      - check-success=CodeQL
+      - check-success=Vercel
+    actions:
+      merge:
+        method: merge
+      comment:
+        message: ✔️ Automatic merge on pull request approval
+  - name: 📦 Automatic merge on @dependabot pull request
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - label=dependencies
+      - check-success=CodeQL
+      - check-success=Vercel
+    actions:
+      merge:
+        method: merge
+        strict: smart
+      comment:
+        message: 📦 Automatic merge on @dependabot pull request
+  - name: 🤖 Automatic merge on @pull pull request
+    conditions:
+      - author~=^pull(|-preview)\[bot\]$
+      - check-success=CodeQL
+      - check-success=Vercel
+    actions:
+      merge:
+        method: merge
+        strict: smart
+      comment:
+        message: 🤖 Automatic merge on @pull pull request
