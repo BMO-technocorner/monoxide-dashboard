@@ -18,7 +18,6 @@ pull_request_rules:
     actions:
       merge:
         method: merge
-        strict: smart
       comment:
         message: 📦 Automatic merge on @dependabot pull request
   - name: 🤖 Automatic merge on @pull pull request
@@ -29,6 +28,5 @@ pull_request_rules:
     actions:
       merge:
         method: merge
-        strict: smart
       comment:
         message: 🤖 Automatic merge on @pull pull request
