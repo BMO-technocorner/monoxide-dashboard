@@ -1,23 +1,15 @@
 import AppLayout from '@/components/layout/AppLayout';
-import { Box, Text } from '@mantine/core';
-import type { NextPage } from 'next';
+import { Box } from '@mantine/core';
+import React from 'react';
 
-const Home: NextPage = () => {
+type SettingsProps = {};
+
+const Settings = ({}: SettingsProps) => {
   return (
-    <AppLayout>
-      <Box py={24} sx={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Text
-          sx={(theme) => ({
-            fontSize: 24,
-            fontWeight: 700,
-            letterSpacing: theme.other.letterSpacing.trackingTight,
-          })}
-        >
-          Settings
-        </Text>
-      </Box>
+    <AppLayout title='Settings'>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 16 }}></Box>
     </AppLayout>
   );
 };
 
-export default Home;
+export default Settings;

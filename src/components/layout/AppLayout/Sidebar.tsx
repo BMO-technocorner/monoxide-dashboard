@@ -9,8 +9,8 @@ import {
   Menu,
   UnstyledButton,
   UnstyledButtonProps,
-  Divider,
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { ChevronRight, Leaf, Logout } from 'tabler-icons-react';
 import { useRouter } from 'next/router';
 import { appLinks } from '@/config/navigation';
@@ -20,7 +20,15 @@ type SidebarProps = {
   handleOpen: () => void;
 };
 
-const useStyles = createStyles({
+type UserButtonProps = {
+  data: {
+    name: string;
+    avatar: string;
+    role: 1 | 2 | 3;
+  };
+} & UnstyledButtonProps;
+
+const useStyles = createStyles((theme) => ({
   linkItem: {
     display: 'flex',
     cursor: 'pointer',
@@ -34,68 +42,72 @@ const useStyles = createStyles({
       backgroundColor: '#111',
     },
   },
-});
 
-type UserButtonProps = {
-  data: {
-    name: string;
-    avatar: string;
-    role: 1 | 2 | 3;
-  };
-} & UnstyledButtonProps;
+  linkItemIconWrapper: {
+    display: 'flex',
+    flexGrow: 1,
+    gap: 16,
+  },
+
+  userButtonWrapper: {
+    display: 'flex',
+    cursor: 'pointer',
+    gap: 16,
+    alignItems: 'center',
+    height: 72,
+    width: '100%',
+  },
+
+  userButtonTextWrapper: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+  },
+
+  userButtonName: {
+    fontSize: 14,
+    fontWeight: 700,
+    letterSpacing: theme.other.letterSpacing.trackingTight,
+  },
+
+  userButtonRole: {
+    fontSize: 12,
+    opacity: 0.9,
+  },
+}));
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ data }: UserButtonProps, ref) => (
-    <UnstyledButton
-      ref={ref}
-      px='md'
-      sx={{
-        display: 'flex',
-        cursor: 'pointer',
-        gap: 16,
-        alignItems: 'center',
-        height: 72,
-        width: '100%',
-      }}
-    >
-      <Avatar
-        alt={data.name}
-        src={data.avatar}
-        radius={'xl'}
-        size='md'
-      ></Avatar>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'space-between',
-          flexDirection: 'column',
-        }}
-      >
-        <Text
-          sx={(theme) => ({
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: theme.other.letterSpacing.trackingTight,
-          })}
-        >
-          {data.name}
-        </Text>
-        <Text sx={{ fontSize: 12, opacity: 0.9 }}>
-          {data.role === 1
-            ? 'Administrator'
-            : data.role === 2
-            ? 'Observer'
-            : 'User'}
-        </Text>
-      </Box>
-    </UnstyledButton>
-  )
+  ({ data }: UserButtonProps, ref) => {
+    const { classes } = useStyles();
+
+    return (
+      <UnstyledButton ref={ref} px='md' className={classes.userButtonWrapper}>
+        <Avatar
+          alt={data.name}
+          src={data.avatar}
+          radius={'xl'}
+          size='md'
+        ></Avatar>
+        <Box className={classes.userButtonTextWrapper}>
+          <Text className={classes.userButtonName}>{data.name}</Text>
+          <Text className={classes.userButtonRole}>
+            {data.role === 1
+              ? 'Administrator'
+              : data.role === 2
+              ? 'Observer'
+              : 'User'}
+          </Text>
+        </Box>
+      </UnstyledButton>
+    );
+  }
 );
 
 export default function Sidebar({ opened, handleOpen }: SidebarProps) {
   const { classes } = useStyles();
   const router = useRouter();
+  const matches = useMediaQuery(`(min-width: 900px)`);
 
   const isActive = (link: string) => router.pathname === link;
 
@@ -110,22 +122,23 @@ export default function Sidebar({ opened, handleOpen }: SidebarProps) {
         background: isActive(item.path) ? theme.colors.dark[6] : 'transparent',
       })}
     >
-      <Box sx={{ display: 'flex', flexGrow: 1, gap: 16 }}>
+      <Box className={classes.linkItemIconWrapper}>
         {item.icon}
         <Box>
           <Text sx={{ fontSize: 14 }}>{item.label}</Text>
         </Box>
       </Box>
-      <ChevronRight />
     </Box>
   ));
 
   return (
     <Navbar
-      hiddenBreakpoint='sm'
+      hiddenBreakpoint='md'
       hidden={!opened}
-      width={{ sm: 200, lg: 300 }}
+      width={{ sm: 300, lg: 300 }}
       p='md'
+      fixed
+      position={{ top: 0, left: 0 }}
     >
       <Navbar.Section>
         <Box sx={{ display: 'flex', gap: 16 }} p={16}>

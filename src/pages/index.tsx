@@ -1,14 +1,15 @@
 import AppLayout from '@/components/layout/AppLayout';
-import type { NextPage } from 'next';
+import { Box } from '@mantine/core';
+import React from 'react';
 
-const Home: NextPage = () => {
+type OverviewProps = {};
+
+const Overview = ({}: OverviewProps) => {
   return (
-    <AppLayout>
-      <div>
-        <h1>Test</h1>
-      </div>
+    <AppLayout title='Overview'>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 16 }}></Box>
     </AppLayout>
   );
 };
 
-export default Home;
+export default Overview;

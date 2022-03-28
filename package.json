@@ -26,7 +26,8 @@
     "next-progress": "^2.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "tabler-icons-react": "^1.40.0"
+    "tabler-icons-react": "^1.40.0",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@types/node": "17.0.22",

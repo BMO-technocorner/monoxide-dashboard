@@ -8,7 +8,6 @@ import {
   Box,
 } from '@mantine/core';
 import { Leaf } from 'tabler-icons-react';
-import ToggleTheme from '@/components/ToggleTheme';
 
 type HeaderProps = {
   opened: boolean;
@@ -42,8 +41,6 @@ export default function Header({ opened, handleOpen }: HeaderProps) {
           <Leaf />
           <Text>Monoxide</Text>
         </Box>
-
-        <ToggleTheme />
       </Box>
     </MantineHeader>
   );
