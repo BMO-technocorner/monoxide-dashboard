@@ -45,6 +45,7 @@ const useStyles = createStyles((theme) => ({
 
   linkItemIconWrapper: {
     display: 'flex',
+    alignItems: 'center',
     flexGrow: 1,
     gap: 16,
   },
@@ -107,7 +108,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
 export default function Sidebar({ opened, handleOpen }: SidebarProps) {
   const { classes } = useStyles();
   const router = useRouter();
-  const matches = useMediaQuery(`(min-width: 900px)`);
+  const largeScreen = useMediaQuery('(min-width: 1000px)');
 
   const isActive = (link: string) => router.pathname === link;
 
@@ -119,14 +120,12 @@ export default function Sidebar({ opened, handleOpen }: SidebarProps) {
       className={classes.linkItem}
       sx={(theme) => ({
         opacity: isActive(item.path) ? 1 : 0.5,
-        background: isActive(item.path) ? theme.colors.dark[6] : 'transparent',
+        background: isActive(item.path) ? theme.colors.dark[8] : 'transparent',
       })}
     >
       <Box className={classes.linkItemIconWrapper}>
         {item.icon}
-        <Box>
-          <Text sx={{ fontSize: 14 }}>{item.label}</Text>
-        </Box>
+        <Text size={largeScreen ? 'sm' : 'xs'}>{item.label}</Text>
       </Box>
     </Box>
   ));
@@ -135,17 +134,11 @@ export default function Sidebar({ opened, handleOpen }: SidebarProps) {
     <Navbar
       hiddenBreakpoint='md'
       hidden={!opened}
-      width={{ sm: 300, lg: 300 }}
+      width={{ xs: '100%', sm: 300, lg: 300 }}
       p='md'
       fixed
       position={{ top: 0, left: 0 }}
     >
-      <Navbar.Section>
-        <Box sx={{ display: 'flex', gap: 16 }} p={16}>
-          <Leaf />
-          <Text sx={{ fontSize: 14, fontWeight: 700 }}>Monoxide</Text>
-        </Box>
-      </Navbar.Section>
       <Navbar.Section grow>{renderLinks}</Navbar.Section>
 
       <Navbar.Section>

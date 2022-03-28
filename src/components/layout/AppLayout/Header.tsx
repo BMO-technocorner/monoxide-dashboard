@@ -18,16 +18,21 @@ export default function Header({ opened, handleOpen }: HeaderProps) {
   const theme = useMantineTheme();
 
   return (
-    <MantineHeader height={70} py='md' px='xl'>
+    <MantineHeader
+      height={70}
+      py='md'
+      px='xl'
+      fixed
+      position={{ top: 0, left: 0, right: 0 }}
+    >
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
           height: '100%',
         }}
       >
-        <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+        <MediaQuery largerThan={1000} styles={{ display: 'none' }}>
           <Burger
             opened={opened}
             onClick={handleOpen}

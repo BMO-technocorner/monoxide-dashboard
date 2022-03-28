@@ -25,7 +25,6 @@ export type ReportModalType = 'contact' | 'resolve' | 'details' | null;
 
 const Report = ({}: ReportProps) => {
   const largeScreen = useMediaQuery('(min-width: 900px)');
-  const mobileScreen = useMediaQuery('(max-width: 444px)');
   const [opened, setOpened] = useState<ReportModalType>(null);
 
   const handleOpen = (v: ReportModalType) => setOpened(v);
