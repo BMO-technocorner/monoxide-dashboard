@@ -1,6 +1,7 @@
 {
   "private": false,
   "name": "monoxide-dashboard",
+  "description": "🖥️ Dashboard Panel for Monoxide Ecosystem.",
   "version": "0.0.1",
   "author": "Monoxide <ezralazuardy@students.undip.ac.id>",
   "license": "MIT",
@@ -13,7 +14,8 @@
     "monoxide-dashboard",
     "dashboard",
     "frontend",
-    "next"
+    "next",
+    "react"
   ],
   "scripts": {
     "dev": "next dev",
