@@ -10,9 +10,10 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import dayjs from "dayjs";
 import React from "react";
 import { Check, ExternalLink, PhoneCall } from "tabler-icons-react";
-import * as timeago from "timeago.js";
+import TimeAgo from "timeago-react";
 import { ReportModalType } from "./ReportModal";
 
 type DataProps = {
@@ -168,7 +169,10 @@ const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
       <Box className={classes.actionSection}>
         <Box>
           <Text size="xs" color="dimmed">
-            {timeago.format(data.createdAt)}
+            <TimeAgo
+              datetime={data.createdAt}
+              title={dayjs(data.createdAt).format("ddd, MMM D, YYYY h:mm A")}
+            />
           </Text>
         </Box>
         <Group spacing={"xs"}>
