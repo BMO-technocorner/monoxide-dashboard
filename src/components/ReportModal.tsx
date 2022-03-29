@@ -1,4 +1,5 @@
 import { Box, Button, Group, Modal, Text } from "@mantine/core";
+import { useModals } from "@mantine/modals";
 import { Check, PhoneCalling, X } from "tabler-icons-react";
 
 export type ReportModalType = "contact" | "resolve" | "details" | null;
@@ -16,7 +17,7 @@ export default function ReportModal({ opened, handleOpen }: ReportModalProps) {
       title={opened === "contact" ? "Call emergency contact" : "Resolve report"}
       centered
     >
-      {opened === "contact" ? (
+      {opened === "contact" && (
         <Box>
           <Group grow direction="column">
             <Button
@@ -34,21 +35,6 @@ export default function ReportModal({ opened, handleOpen }: ReportModalProps) {
               size={"xs"}
             >
               Call the nearest emergency contact
-            </Button>
-          </Group>
-        </Box>
-      ) : (
-        <Box>
-          <Group grow>
-            <Button
-              color="green"
-              variant="light"
-              leftIcon={<Check size={14} />}
-            >
-              Yes
-            </Button>
-            <Button color="red" variant="light" leftIcon={<X size={14} />}>
-              No
             </Button>
           </Group>
         </Box>

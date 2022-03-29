@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { useModals } from "@mantine/modals";
 import dayjs from "dayjs";
 import React from "react";
 import { Check, ExternalLink, PhoneCall } from "tabler-icons-react";
@@ -112,6 +113,22 @@ const useStyles = createStyles((theme) => {
 const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
   const { classes } = useStyles();
   const largeScreen = useMediaQuery("(min-width: 900px)");
+  const modals = useModals();
+
+  const openResolveConfirmModal = () =>
+    modals.openConfirmModal({
+      title: "Please confirm your action",
+      children: (
+        <Text size="sm">
+          This action is so important that you are required to confirm it with a
+          modal. Please click one of these buttons to proceed.
+        </Text>
+      ),
+      centered: true,
+      labels: { confirm: "Confirm", cancel: "Cancel" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
 
   return (
     <Card p={16} className={classes.card}>
@@ -201,7 +218,7 @@ const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
               variant="light"
               color="green"
               size={"lg"}
-              onClick={() => handleOpen("resolve")}
+              onClick={openResolveConfirmModal}
             >
               <Check size={16} />
             </ActionIcon>
