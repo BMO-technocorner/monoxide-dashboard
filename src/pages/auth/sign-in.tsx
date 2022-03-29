@@ -1,31 +1,15 @@
-import AppLayout from '@/components/layout/AppLayout';
-import Table from '@/components/Table';
-import { ReportData } from '@/constants/report-data';
-import { Box, ScrollArea, Text } from '@mantine/core';
-import React from 'react';
+import AppLayout from "@/components/layout/AppLayout";
+import { Box } from "@mantine/core";
+import React from "react";
 
-type ReportProps = {};
+type SignInProps = {};
 
-const Report = ({}: ReportProps) => {
+const SignIn = ({}: SignInProps) => {
   return (
-    <AppLayout>
-      <Box py={24} sx={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Text
-          sx={(theme) => ({
-            fontSize: 24,
-            fontWeight: 700,
-            letterSpacing: theme.other.letterSpacing.trackingTight,
-          })}
-        >
-          Report
-        </Text>
-
-        <ScrollArea>
-          <Table data={ReportData} />
-        </ScrollArea>
-      </Box>
+    <AppLayout title="Sign In">
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 16 }}></Box>
     </AppLayout>
   );
 };
 
-export default Report;
+export default SignIn;
