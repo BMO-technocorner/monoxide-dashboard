@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react";
 import {
   Navbar,
   Box,
@@ -9,15 +9,14 @@ import {
   Menu,
   UnstyledButton,
   UnstyledButtonProps,
-} from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
-import { ChevronRight, Leaf, Logout } from 'tabler-icons-react';
-import { useRouter } from 'next/router';
-import { appLinks } from '@/config/navigation';
+} from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { ChevronRight, Leaf, Logout } from "tabler-icons-react";
+import { useRouter } from "next/router";
+import { appLinks } from "@/config/navigation";
 
 type SidebarProps = {
   opened: boolean;
-  handleOpen: () => void;
 };
 
 type UserButtonProps = {
@@ -30,40 +29,40 @@ type UserButtonProps = {
 
 const useStyles = createStyles((theme) => ({
   linkItem: {
-    display: 'flex',
-    cursor: 'pointer',
+    display: "flex",
+    cursor: "pointer",
     gap: 16,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     borderRadius: 8,
 
-    '&:hover': {
+    "&:hover": {
       opacity: 1,
-      backgroundColor: '#111',
+      backgroundColor: "#111",
     },
   },
 
   linkItemIconWrapper: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     flexGrow: 1,
     gap: 16,
   },
 
   userButtonWrapper: {
-    display: 'flex',
-    cursor: 'pointer',
+    display: "flex",
+    cursor: "pointer",
     gap: 16,
-    alignItems: 'center',
+    alignItems: "center",
     height: 72,
-    width: '100%',
+    width: "100%",
   },
 
   userButtonTextWrapper: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+    flexDirection: "column",
   },
 
   userButtonName: {
@@ -83,21 +82,21 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
     const { classes } = useStyles();
 
     return (
-      <UnstyledButton ref={ref} px='md' className={classes.userButtonWrapper}>
+      <UnstyledButton ref={ref} px="md" className={classes.userButtonWrapper}>
         <Avatar
           alt={data.name}
           src={data.avatar}
-          radius={'xl'}
-          size='md'
+          radius={"xl"}
+          size="md"
         ></Avatar>
         <Box className={classes.userButtonTextWrapper}>
           <Text className={classes.userButtonName}>{data.name}</Text>
           <Text className={classes.userButtonRole}>
             {data.role === 1
-              ? 'Administrator'
+              ? "Administrator"
               : data.role === 2
-              ? 'Observer'
-              : 'User'}
+              ? "Observer"
+              : "User"}
           </Text>
         </Box>
       </UnstyledButton>
@@ -105,37 +104,37 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   }
 );
 
-export default function Sidebar({ opened, handleOpen }: SidebarProps) {
+export default function Sidebar({ opened }: SidebarProps) {
   const { classes } = useStyles();
   const router = useRouter();
-  const largeScreen = useMediaQuery('(min-width: 1000px)');
+  const largeScreen = useMediaQuery("(min-width: 1000px)");
 
   const isActive = (link: string) => router.pathname === link;
 
   const renderLinks = appLinks.map((item) => (
     <Box
       key={item.label}
-      p='md'
+      p="md"
       onClick={() => router.push(item.path)}
       className={classes.linkItem}
       sx={(theme) => ({
         opacity: isActive(item.path) ? 1 : 0.5,
-        background: isActive(item.path) ? theme.colors.dark[8] : 'transparent',
+        background: isActive(item.path) ? theme.colors.dark[8] : "transparent",
       })}
     >
       <Box className={classes.linkItemIconWrapper}>
         {item.icon}
-        <Text size={largeScreen ? 'sm' : 'xs'}>{item.label}</Text>
+        <Text size={largeScreen ? "sm" : "xs"}>{item.label}</Text>
       </Box>
     </Box>
   ));
 
   return (
     <Navbar
-      hiddenBreakpoint='md'
+      hiddenBreakpoint="md"
       hidden={!opened}
-      width={{ xs: '100%', sm: 300, lg: 300 }}
-      p='md'
+      width={{ xs: "100%", sm: 300, lg: 300 }}
+      p="md"
       fixed
       position={{ top: 0, left: 0 }}
     >
@@ -145,12 +144,12 @@ export default function Sidebar({ opened, handleOpen }: SidebarProps) {
         <Group grow>
           <Menu
             withArrow
-            placement='center'
+            placement="center"
             control={
               <UserButton
                 data={{
-                  name: 'Muhammad Bhaska',
-                  avatar: 'https:/github.com/mhmdbhsk.png',
+                  name: "Muhammad Bhaska",
+                  avatar: "https:/github.com/mhmdbhsk.png",
                   role: 1,
                 }}
               />
@@ -164,4 +163,4 @@ export default function Sidebar({ opened, handleOpen }: SidebarProps) {
   );
 }
 
-UserButton.displayName = 'UserButton';
+UserButton.displayName = "UserButton";
