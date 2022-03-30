@@ -6,8 +6,10 @@ compatibility_date = "2022-03-30"
 
 [site]
 bucket = ".next/static"
-entry-point = ".next"
+entry-point = "server.js"
 
 [build]
-command = "npm run start"
-upload.format = "service-worker"
+command = "true"
+
+[build.upload]
+format = "service-worker"
