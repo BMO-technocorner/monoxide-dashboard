@@ -9,5 +9,5 @@ bucket = ".next/static"
 entry-point = ".next"
 
 [build]
-command = "true"
+command = "npm run start"
 upload.format = "service-worker"
