@@ -80,6 +80,7 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     gap: 16,
+    border: "1px solid #2C2E33",
   },
 
   link: {
@@ -126,7 +127,10 @@ const SignIn = ({}: SignInProps) => {
         </Box>
 
         <form
-          onSubmit={form.onSubmit((values) => console.log(values))}
+          onSubmit={form.onSubmit((values) => {
+            console.log(values);
+            router.push("/");
+          })}
           className={classes.form}
         >
           <Card className={classes.card}>
@@ -164,7 +168,13 @@ const SignIn = ({}: SignInProps) => {
           </Card>
 
           <Box className={classes.buttonWrapper}>
-            <Button className={classes.fullWidth} type="submit">
+            <Button
+              className={classes.fullWidth}
+              type="submit"
+              disabled={
+                form.values.email && form.values.password ? false : true
+              }
+            >
               Login
             </Button>
             <Divider
