@@ -4,8 +4,8 @@ account_id = "49d7d69550f0cc30732a1b8f83922fcf"
 workers_dev = true
 
 [site]
-bucket = ".output/public"
-entry-point = ".output"
+bucket = ".next/static"
+entry-point = ".next"
 
 [build]
 command = "true"
