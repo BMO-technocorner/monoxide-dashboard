@@ -6,7 +6,7 @@ compatibility_date = "2022-03-30"
 
 [site]
 bucket = ".next/static"
-entry-point = "server.js"
+entry-point = ".next"
 
 [build]
 command = "true"
