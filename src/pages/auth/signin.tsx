@@ -6,15 +6,26 @@ import {
   Button,
   Card,
   createStyles,
+  Divider,
   Group,
-  PasswordInput,
   Text,
   TextInput,
 } from "@mantine/core";
 import React, { useState } from "react";
 import { Eye, EyeOff, Leaf } from "tabler-icons-react";
+import { useRouter } from "next/router";
+import { z } from "zod";
+import { useForm, zodResolver } from "@mantine/form";
 
 type SignInProps = {};
+
+const loginSchema = z.object({
+  email: z.string().nonempty().email("Not a valid email"),
+  password: z
+    .string()
+    .nonempty()
+    .min(8, "Your password must be at least 8 character"),
+});
 
 const useStyles = createStyles((theme) => ({
   contentWrapper: {
@@ -54,6 +65,14 @@ const useStyles = createStyles((theme) => ({
     letterSpacing: theme.other.letterSpacing.trackingTight,
   },
 
+  form: {
+    maxWidth: 400,
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+  },
+
   card: {
     maxWidth: 400,
     width: "100%",
@@ -74,6 +93,9 @@ const useStyles = createStyles((theme) => ({
   buttonWrapper: {
     maxWidth: 400,
     width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
   },
 
   fullWidth: {
@@ -84,6 +106,14 @@ const useStyles = createStyles((theme) => ({
 const SignIn = ({}: SignInProps) => {
   const { classes } = useStyles();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const form = useForm({
+    schema: zodResolver(loginSchema),
+    initialValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const handleChangeShowPassword = () => setShowPassword((v: boolean) => !v);
 
@@ -94,37 +124,64 @@ const SignIn = ({}: SignInProps) => {
           <Leaf />
           <Text className={classes.title}>Monoxide</Text>
         </Box>
-        <Card className={classes.card}>
-          <TextInput
-            label="Email"
-            placeholder="Input email address"
-            classNames={classes}
-          />
-          <Group direction="column" position="right">
+
+        <form
+          onSubmit={form.onSubmit((values) => console.log(values))}
+          className={classes.form}
+        >
+          <Card className={classes.card}>
             <TextInput
-              rightSection={
-                <ActionIcon onClick={handleChangeShowPassword}>
-                  {showPassword ? <Eye size={12} /> : <EyeOff size={12} />}
-                </ActionIcon>
-              }
-              label="Password"
-              placeholder="Input password"
+              label="Email"
+              placeholder="Input email address"
               classNames={classes}
-              type={!showPassword ? "password" : "text"}
-              className={classes.fullWidth}
+              type="email"
+              required
+              {...form.getInputProps("email")}
             />
-            <Anchor<"a">
-              href="#"
-              onClick={(event) => event.preventDefault()}
-              className={classes.link}
+            <Group direction="column" position="right">
+              <TextInput
+                rightSection={
+                  <ActionIcon onClick={handleChangeShowPassword}>
+                    {showPassword ? <Eye size={12} /> : <EyeOff size={12} />}
+                  </ActionIcon>
+                }
+                label="Password"
+                placeholder="Input password"
+                classNames={classes}
+                type={!showPassword ? "password" : "text"}
+                className={classes.fullWidth}
+                required
+                {...form.getInputProps("password")}
+              />
+              <Anchor<"a">
+                href="#"
+                onClick={(event) => event.preventDefault()}
+                className={classes.link}
+              >
+                Forgot your password?
+              </Anchor>
+            </Group>
+          </Card>
+
+          <Box className={classes.buttonWrapper}>
+            <Button className={classes.fullWidth} type="submit">
+              Login
+            </Button>
+            <Divider
+              my="xs"
+              variant="dashed"
+              labelPosition="center"
+              label="Or"
+            />
+            <Button
+              className={classes.fullWidth}
+              onClick={() => router.push("/auth/signup")}
+              variant="outline"
             >
-              Forgot your password?
-            </Anchor>
-          </Group>
-        </Card>
-        <Box className={classes.buttonWrapper}>
-          <Button className={classes.fullWidth}>Masuk</Button>
-        </Box>
+              Register
+            </Button>
+          </Box>
+        </form>
       </Box>
     </AuthLayout>
   );
