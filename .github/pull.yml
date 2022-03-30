@@ -1,5 +1,0 @@
-version: "1"
-rules:
-  - base: main
-    upstream: BMO-technocorner:main
-    mergeMethod: hardreset

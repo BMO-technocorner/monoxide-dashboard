@@ -1,0 +1,39 @@
+name: "Cloudflare Deployment"
+
+on:
+  workflow_run:
+    workflows: ["CodeQL"]
+    types: [completed]
+
+jobs:
+  deployment:
+    runs-on: ${{ matrix.os }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 📥 Install Github Action Checkout
+        uses: actions/checkout@v2
+        
+      - name: 📥 Install NodeJS and Yarn
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+        
+      - name: 🔨 Build Project
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
+
+      - name: 📤 Publish to Cloudflare
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
