@@ -35,7 +35,8 @@ jobs:
 
       - name: "⚙️ Configure Cloudfare Worker Server"
         run: |
-          sudo sed -i 's/{"type": "commonjs"}/{"type": "commonjs","private": true,"main": "..\/server.mjs"}/g' .next/package.json
+          cp server.mjs .next/server.mjs
+          sudo sed -i 's/{"type": "commonjs"}/{"type": "commonjs","private": true,"main": "server.mjs"}/g' .next/package.json
 
       - name: 📤 Publish to Cloudflare
         uses: cloudflare/wrangler-action@1.3.0
