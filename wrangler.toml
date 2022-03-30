@@ -2,6 +2,7 @@ name = "monoxide-dashboard"
 type = "javascript"
 account_id = "49d7d69550f0cc30732a1b8f83922fcf"
 workers_dev = true
+compatibility_date = "2022-03-30"
 
 [site]
 bucket = ".next/static"
