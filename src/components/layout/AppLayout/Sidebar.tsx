@@ -11,7 +11,13 @@ import {
   UnstyledButtonProps,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { ChevronRight, Leaf, Logout } from "tabler-icons-react";
+import {
+  ChevronRight,
+  Leaf,
+  Logout,
+  Settings,
+  SwitchHorizontal,
+} from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { appLinks } from "@/config/navigation";
 
@@ -26,6 +32,21 @@ type UserButtonProps = {
     role: 1 | 2 | 3;
   };
 } & UnstyledButtonProps;
+
+const userButtonLinks = [
+  {
+    id: 1,
+    path: "/settings",
+    title: "Settings",
+    icon: <Settings size={14} />,
+  },
+  {
+    id: 2,
+    path: "/logout",
+    title: "Logout",
+    icon: <Logout size={14} />,
+  },
+];
 
 const useStyles = createStyles((theme) => ({
   linkItem: {
@@ -56,6 +77,8 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     height: 72,
     width: "100%",
+    borderRadius: 8,
+    backgroundColor: theme.colors.dark[5],
   },
 
   userButtonTextWrapper: {
@@ -78,11 +101,16 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ data }: UserButtonProps, ref) => {
+  ({ data, ...others }: UserButtonProps, ref) => {
     const { classes } = useStyles();
 
     return (
-      <UnstyledButton ref={ref} px="md" className={classes.userButtonWrapper}>
+      <UnstyledButton
+        ref={ref}
+        px="md"
+        className={classes.userButtonWrapper}
+        {...others}
+      >
         <Avatar
           alt={data.name}
           src={data.avatar}
@@ -110,6 +138,11 @@ export default function Sidebar({ opened }: SidebarProps) {
   const largeScreen = useMediaQuery("(min-width: 1000px)");
 
   const isActive = (link: string) => router.pathname === link;
+
+  const handleLogout = () => {
+    router.push("/auth/signin");
+    console.log("Logout berhasil");
+  };
 
   const renderLinks = appLinks.map((item) => (
     <Box
@@ -141,23 +174,38 @@ export default function Sidebar({ opened }: SidebarProps) {
       <Navbar.Section grow>{renderLinks}</Navbar.Section>
 
       <Navbar.Section>
-        <Group grow>
-          <Menu
-            withArrow
-            placement="center"
-            control={
-              <UserButton
-                data={{
-                  name: "Muhammad Bhaska",
-                  avatar: "https:/github.com/mhmdbhsk.png",
-                  role: 1,
-                }}
-              />
-            }
-          >
-            <Menu.Item icon={<Logout size={14} />}>Sign Out</Menu.Item>
-          </Menu>
-        </Group>
+        <Menu
+          withArrow
+          transition="fade"
+          transitionDuration={200}
+          sx={{ width: "100%" }}
+          position={largeScreen ? "right" : "top"}
+          placement={largeScreen ? "end" : "center"}
+          control={
+            <UserButton
+              data={{
+                name: "Muhammad Bhaska",
+                avatar: "https:/github.com/mhmdbhsk.png",
+                role: 1,
+              }}
+            />
+          }
+        >
+          <Menu.Label>Account</Menu.Label>
+          {userButtonLinks.map((link) => (
+            <Menu.Item
+              key={link.id}
+              icon={link.icon}
+              onClick={() =>
+                link.path === "/logout"
+                  ? handleLogout()
+                  : router.push(link.path)
+              }
+            >
+              {link.title}
+            </Menu.Item>
+          ))}
+        </Menu>
       </Navbar.Section>
     </Navbar>
   );
