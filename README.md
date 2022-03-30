@@ -1,5 +1,5 @@
-<a href="https://github.com/BMO-technocorner/monoxide-dashboard/actions/workflows/cloudflare.yml">
-  <img src="https://img.shields.io/github/workflow/status/BMO-technocorner/monoxide-dashboard/Cloudflare%20Deployment?label=build" alt="Build"/>
+<a href="https://app.netlify.com/sites/monoxide-dashboard/deploys">
+  <img src="https://api.netlify.com/api/v1/badges/f9c4501b-bee1-4515-a2e9-ae45b375ab4e/deploy-status" alt="Build"/>
 </a>
 <a href="https://github.com/BMO-technocorner/monoxide-dashboard/actions/workflows/codeql-analysis.yml">
   <img src="https://img.shields.io/github/workflow/status/BMO-technocorner/monoxide-dashboard/CodeQL?label=security" alt="CodeQL Security Analysis" target="_blank" rel="noopener noreferrer">
