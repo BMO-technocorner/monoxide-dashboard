@@ -35,7 +35,7 @@ jobs:
 
       - name: "⚙️ Configure Cloudfare Worker Server"
         run: |
-          cp server.mjs .next/server.mjs
+          sudo cp server.mjs .next/server.mjs
           sudo sed -i 's/{"type": "commonjs"}/{"type": "commonjs","private": true,"main": "server.mjs"}/g' .next/package.json
 
       - name: 📤 Publish to Cloudflare
