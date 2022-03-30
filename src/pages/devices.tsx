@@ -1,4 +1,5 @@
 import DeviceAddForm from "@/components/DeviceAddForm";
+import DeviceAddMaps from "@/components/DeviceAddMaps";
 import DeviceCard from "@/components/DeviceCard";
 import { DevicesModalType } from "@/components/DevicesModal";
 import AppLayout from "@/components/layout/AppLayout";
@@ -50,15 +51,11 @@ const Devices = ({}: DevicesProps) => {
       children: <DeviceAddForm />,
       onConfirm: () =>
         modals.openConfirmModal({
-          title: "This is modal at second layer",
-          labels: { confirm: "Close modal", cancel: "Back" },
+          title: "Input Device Location",
+          labels: { confirm: "Finish", cancel: "Back" },
           closeOnConfirm: false,
           centered: true,
-          children: (
-            <Text size="sm">
-              When this modal is closed modals state will revert to first modal
-            </Text>
-          ),
+          children: <DeviceAddMaps />,
           onConfirm: () => modals.closeAll(),
         }),
     });

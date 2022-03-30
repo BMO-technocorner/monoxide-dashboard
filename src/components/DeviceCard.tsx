@@ -83,7 +83,7 @@ const useStyles = createStyles((theme) => {
       position: "absolute",
       top: 12,
       zIndex: 1,
-      right: 12,
+      right: -25,
       display: "flex",
       borderRadius: 999,
     },
@@ -119,32 +119,34 @@ const DeviceCard = ({ device, handleOpen }: DeviceCardProps) => {
 
       {/* Device Image */}
       <Box className={classes.deviceImageWrapper}>
-        <Image
-          src="/images/device-image.png"
-          alt="Device"
-          fit="contain"
-          width={100}
-          height={100}
-        />
-        <Box className={classes.deviceImageStatusWrapper}>
-          <Tooltip
-            label={
-              device.status.power
-                ? `Device Online - ${device.status.timeline.length} alerts`
-                : `Device Offline - ${device.status.timeline.length} alerts`
-            }
-            withArrow
-            transition="fade"
-            transitionDuration={200}
-          >
-            <Badge
-              color={device.status.power ? "green" : "red"}
-              variant="dot"
-              className={classes.deviceImageStatusBadge}
+        <Box sx={{ position: "relative" }}>
+          <Image
+            src="/images/device-image.png"
+            alt="Device"
+            fit="contain"
+            width={100}
+            height={100}
+          />
+          <Box className={classes.deviceImageStatusWrapper}>
+            <Tooltip
+              label={
+                device.status.power
+                  ? `Device Online - ${device.status.timeline.length} alerts`
+                  : `Device Offline - ${device.status.timeline.length} alerts`
+              }
+              withArrow
+              transition="fade"
+              transitionDuration={200}
             >
-              {device.status.timeline.length}
-            </Badge>
-          </Tooltip>
+              <Badge
+                color={device.status.power ? "green" : "red"}
+                variant="dot"
+                className={classes.deviceImageStatusBadge}
+              >
+                {device.status.timeline.length}
+              </Badge>
+            </Tooltip>
+          </Box>
         </Box>
       </Box>
 

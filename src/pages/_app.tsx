@@ -1,5 +1,5 @@
 import { AppProps } from "next/app";
-import { MantineProvider, ColorScheme } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { Fonts, theme } from "@/theme";
 import NextProgress from "next-progress";
 import { ModalsProvider } from "@mantine/modals";
