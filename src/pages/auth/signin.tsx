@@ -43,6 +43,42 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.sm / 2,
     zIndex: 1,
   },
+
+  titleWrapper: {
+    display: "flex",
+    gap: 8,
+  },
+
+  title: {
+    fontWeight: "bold",
+    letterSpacing: theme.other.letterSpacing.trackingTight,
+  },
+
+  card: {
+    maxWidth: 400,
+    width: "100%",
+    borderRadius: 8,
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+  },
+
+  link: {
+    paddingTop: 2,
+    color:
+      theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 4 : 6],
+    fontWeight: 500,
+    fontSize: theme.fontSizes.xs,
+  },
+
+  buttonWrapper: {
+    maxWidth: 400,
+    width: "100%",
+  },
+
+  fullWidth: {
+    width: "100%",
+  },
 }));
 
 const SignIn = ({}: SignInProps) => {
@@ -54,32 +90,11 @@ const SignIn = ({}: SignInProps) => {
   return (
     <AuthLayout>
       <Box className={classes.contentWrapper} p={24}>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 8,
-          }}
-        >
+        <Box className={classes.titleWrapper}>
           <Leaf />
-          <Text
-            sx={(theme) => ({
-              fontWeight: "bold",
-              letterSpacing: theme.other.letterSpacing.trackingTight,
-            })}
-          >
-            Monoxide
-          </Text>
+          <Text className={classes.title}>Monoxide</Text>
         </Box>
-        <Card
-          sx={{
-            maxWidth: 400,
-            width: "100%",
-            borderRadius: 8,
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-          }}
-        >
+        <Card className={classes.card}>
           <TextInput
             label="Email"
             placeholder="Input email address"
@@ -96,38 +111,19 @@ const SignIn = ({}: SignInProps) => {
               placeholder="Input password"
               classNames={classes}
               type={!showPassword ? "password" : "text"}
-              sx={{ width: "100%" }}
+              className={classes.fullWidth}
             />
             <Anchor<"a">
               href="#"
               onClick={(event) => event.preventDefault()}
-              sx={(theme) => ({
-                paddingTop: 2,
-                color:
-                  theme.colors[theme.primaryColor][
-                    theme.colorScheme === "dark" ? 4 : 6
-                  ],
-                fontWeight: 500,
-                fontSize: theme.fontSizes.xs,
-              })}
+              className={classes.link}
             >
               Forgot your password?
             </Anchor>
           </Group>
         </Card>
-        <Box
-          sx={{
-            maxWidth: 400,
-            width: "100%",
-          }}
-        >
-          <Button
-            sx={{
-              width: "100%",
-            }}
-          >
-            Masuk
-          </Button>
+        <Box className={classes.buttonWrapper}>
+          <Button className={classes.fullWidth}>Masuk</Button>
         </Box>
       </Box>
     </AuthLayout>
