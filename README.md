@@ -1,5 +1,5 @@
-<a href="https://manage.monoxide.ezralazuardy.com">
-  <img src="https://therealsujitk-vercel-badge.vercel.app/?app=monoxide-dashboard" alt="Deployment">
+<a href="https://github.com/BMO-technocorner/monoxide-dashboard/actions/workflows/cloudflare.yml">
+  <img src="https://img.shields.io/github/workflow/status/BMO-technocorner/monoxide-dashboard/Cloudflare%20Deployment?label=build" alt="Build"/>
 </a>
 <a href="https://github.com/BMO-technocorner/monoxide-dashboard/actions/workflows/codeql-analysis.yml">
   <img src="https://img.shields.io/github/workflow/status/BMO-technocorner/monoxide-dashboard/CodeQL?label=security" alt="CodeQL Security Analysis" target="_blank" rel="noopener noreferrer">
