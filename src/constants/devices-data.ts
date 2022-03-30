@@ -13,7 +13,7 @@ export const DevicesData = [
     },
     status: {
       power: true,
-      uptimeSince: "",
+      uptime: "",
       timeline: [
         {
           id: "1",
@@ -104,7 +104,7 @@ export const DevicesData = [
     },
     status: {
       power: false,
-      uptimeSince: "",
+      uptime: "",
       timeline: [
         {
           id: "1",
@@ -129,7 +129,7 @@ export const DevicesData = [
     },
     status: {
       power: true,
-      uptimeSince: "",
+      uptime: "",
       timeline: [
         {
           id: "1",
@@ -178,7 +178,7 @@ export const DevicesData = [
     },
     status: {
       power: false,
-      uptimeSince: "",
+      uptime: "",
       timeline: [
         {
           id: "1",
