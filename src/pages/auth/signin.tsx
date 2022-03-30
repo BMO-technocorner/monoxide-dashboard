@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Card,
+  Center,
   createStyles,
   Divider,
   Group,
@@ -12,7 +13,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { Eye, EyeOff, Leaf } from "tabler-icons-react";
+import { ArrowLeft, ArrowRight, Eye, EyeOff, Leaf } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
@@ -102,6 +103,11 @@ const useStyles = createStyles((theme) => ({
   fullWidth: {
     width: "100%",
   },
+
+  controlRegister: {
+    width: "100%",
+    textAlign: "center",
+  },
 }));
 
 const SignIn = ({}: SignInProps) => {
@@ -177,19 +183,16 @@ const SignIn = ({}: SignInProps) => {
             >
               Login
             </Button>
-            <Divider
-              my="xs"
-              variant="dashed"
-              labelPosition="center"
-              label="Or"
-            />
-            <Button
-              className={classes.fullWidth}
+            <Anchor
+              color="dimmed"
+              size="sm"
+              className={classes.controlRegister}
               onClick={() => router.push("/auth/signup")}
-              variant="outline"
             >
-              Register
-            </Button>
+              <Center inline>
+                <Box ml={5}>Dont have account? Register</Box>
+              </Center>
+            </Anchor>
           </Box>
         </form>
       </Box>

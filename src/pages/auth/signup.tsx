@@ -1,9 +1,11 @@
 import AuthLayout from "@/components/layout/AuthLayout";
 import {
   ActionIcon,
+  Anchor,
   Box,
   Button,
   Card,
+  Center,
   Checkbox,
   createStyles,
   Divider,
@@ -11,7 +13,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Eye, EyeOff, Leaf } from "tabler-icons-react";
+import { ArrowLeft, Eye, EyeOff, Leaf } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
@@ -135,6 +137,11 @@ const useStyles = createStyles((theme) => ({
   labelCheckbox: {
     fontSize: 12,
   },
+
+  controlLogin: {
+    width: "100%",
+    textAlign: "center",
+  },
 }));
 
 const SignUp = ({}: SignUpProps) => {
@@ -239,19 +246,17 @@ const SignUp = ({}: SignUpProps) => {
             >
               Register
             </Button>
-            <Divider
-              my="xs"
-              variant="dashed"
-              labelPosition="center"
-              label="Or"
-            />
-            <Button
-              className={classes.fullWidth}
+            <Anchor
+              color="dimmed"
+              size="sm"
+              className={classes.controlLogin}
               onClick={() => router.push("/auth/signin")}
-              variant="outline"
             >
-              Login
-            </Button>
+              <Center inline>
+                <ArrowLeft size={12} />
+                <Box ml={5}>Back to login page</Box>
+              </Center>
+            </Anchor>
           </Box>
         </form>
       </Box>
