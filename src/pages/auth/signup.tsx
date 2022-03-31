@@ -12,51 +12,13 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ArrowLeft, Eye, EyeOff, Leaf } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
 
 type SignUpProps = {};
-
-const registerSchema = z
-  .object({
-    fullName: z
-      .string({
-        required_error: "First name is required",
-      })
-      .nonempty(),
-    email: z
-      .string({
-        required_error: "Email is required",
-      })
-      .email("Not a valid email")
-      .nonempty(),
-    password: z
-      .string()
-      .nonempty()
-      .min(8, "Your password must be at least 8 character"),
-    passwordConfirmation: z
-      .string()
-      .nonempty()
-      .min(8, "Your password must be at least 8 character"),
-    acceptTerms: z.literal(true),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: "Passwords do not match",
-    path: ["passwordConfirmation"],
-  })
-  .refine(
-    (data) =>
-      data.fullName || data.email || data.password || data.passwordConfirmation,
-    {
-      message: "Accept terms and condition before register",
-      path: ["acceptTerms"],
-    }
-  );
-
-type registerSchema = z.infer<typeof registerSchema>;
 
 const useStyles = createStyles((theme) => ({
   contentWrapper: {
@@ -143,6 +105,44 @@ const useStyles = createStyles((theme) => ({
     textAlign: "center",
   },
 }));
+
+const registerSchema = z
+  .object({
+    fullName: z
+      .string({
+        required_error: "First name is required",
+      })
+      .nonempty(),
+    email: z
+      .string({
+        required_error: "Email is required",
+      })
+      .email("Not a valid email")
+      .nonempty(),
+    password: z
+      .string()
+      .nonempty()
+      .min(8, "Your password must be at least 8 character"),
+    passwordConfirmation: z
+      .string()
+      .nonempty()
+      .min(8, "Your password must be at least 8 character"),
+    acceptTerms: z.literal(true),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: "Passwords do not match",
+    path: ["passwordConfirmation"],
+  })
+  .refine(
+    (data) =>
+      data.fullName || data.email || data.password || data.passwordConfirmation,
+    {
+      message: "Accept terms and condition before register",
+      path: ["acceptTerms"],
+    }
+  );
+
+type registerSchema = z.infer<typeof registerSchema>;
 
 const SignUp = ({}: SignUpProps) => {
   const { classes } = useStyles();
