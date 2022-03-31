@@ -232,6 +232,8 @@ const SignUp = ({}: SignUpProps) => {
 
           <Box className={classes.buttonWrapper}>
             <Button
+              variant="light"
+              color="grape"
               className={classes.fullWidth}
               type="submit"
               disabled={

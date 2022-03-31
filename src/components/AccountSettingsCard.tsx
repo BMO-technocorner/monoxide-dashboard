@@ -132,6 +132,8 @@ export default function AccountSettingsCard({}: AccountSettingsCardProps) {
           onClick={() =>
             !editProfile ? handleChangeEditProfile() : console.log("test")
           }
+          variant="light"
+          color="grape"
         >
           {!editProfile ? "Edit Profile" : "Save changes"}
         </Button>

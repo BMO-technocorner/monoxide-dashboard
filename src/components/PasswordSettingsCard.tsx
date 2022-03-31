@@ -168,7 +168,12 @@ export default function PasswordSettingsCard({}: PasswordSettingsCardProps) {
           required
           {...form.getInputProps("passwordConfirmation")}
         />
-        <Button type="submit" sx={{ width: 150, fontSize: 12 }}>
+        <Button
+          type="submit"
+          sx={{ width: 150, fontSize: 12 }}
+          variant="light"
+          color="grape"
+        >
           Change Password
         </Button>
       </form>

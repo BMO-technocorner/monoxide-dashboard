@@ -37,12 +37,14 @@ const Devices = ({}: DevicesProps) => {
       title: "Input Device Information",
       closeOnConfirm: false,
       labels: { confirm: "Next", cancel: "Cancel" },
+      confirmProps: { color: "grape", variant: "light" },
       centered: true,
       children: <DeviceAddForm />,
       onConfirm: () =>
         modals.openConfirmModal({
           title: "Input Device Location",
           labels: { confirm: "Finish", cancel: "Back" },
+          confirmProps: { color: "grape", variant: "light" },
           closeOnConfirm: false,
           centered: true,
           children: <DeviceAddMaps />,
@@ -54,7 +56,12 @@ const Devices = ({}: DevicesProps) => {
     <AppLayout
       title="Devices"
       headingCustom={
-        <Button leftIcon={<Plus size={14} />} onClick={openAddDeviceModal}>
+        <Button
+          leftIcon={<Plus size={14} />}
+          onClick={openAddDeviceModal}
+          variant="light"
+          color="grape"
+        >
           Add Device
         </Button>
       }
