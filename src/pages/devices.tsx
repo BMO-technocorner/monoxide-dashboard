@@ -1,23 +1,13 @@
+import { DevicesModalType } from "@/components/DevicesModal";
+import { DevicesData } from "@/constants/devices-data";
+import { Box, Button, Grid, createStyles } from "@mantine/core";
+import { useModals } from "@mantine/modals";
+import { useState } from "react";
+import { Plus } from "tabler-icons-react";
+import AppLayout from "@/components/layout/AppLayout";
 import DeviceAddForm from "@/components/DeviceAddForm";
 import DeviceAddMaps from "@/components/DeviceAddMaps";
 import DeviceCard from "@/components/DeviceCard";
-import { DevicesModalType } from "@/components/DevicesModal";
-import AppLayout from "@/components/layout/AppLayout";
-import { DevicesData } from "@/constants/devices-data";
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  Grid,
-  Image,
-  Text,
-  Tooltip,
-  createStyles,
-} from "@mantine/core";
-import { useModals } from "@mantine/modals";
-import React, { useState } from "react";
-import { Plus } from "tabler-icons-react";
 
 type DevicesProps = {};
 

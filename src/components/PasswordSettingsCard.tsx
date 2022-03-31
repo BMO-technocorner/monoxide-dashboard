@@ -14,8 +14,7 @@ import { z } from "zod";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    display: "flex",
-    flexDirection: "column",
+    border: "1px solid #2C2E33",
   },
 
   item: {

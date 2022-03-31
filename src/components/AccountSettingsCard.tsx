@@ -15,8 +15,7 @@ import { z } from "zod";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    // backgroundColor:
-    //   theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    border: "1px solid #2C2E33",
   },
 
   item: {

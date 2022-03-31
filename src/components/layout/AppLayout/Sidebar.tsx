@@ -58,8 +58,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 8,
 
     "&:hover": {
-      opacity: 1,
-      backgroundColor: "#111",
+      color: theme.colors.dark[2],
     },
   },
 
@@ -78,7 +77,8 @@ const useStyles = createStyles((theme) => ({
     height: 72,
     width: "100%",
     borderRadius: 8,
-    backgroundColor: theme.colors.dark[5],
+    backgroundColor: theme.colors.dark[6],
+    border: "1px solid #2C2E33",
   },
 
   userButtonTextWrapper: {
@@ -159,8 +159,10 @@ export default function Sidebar({ opened }: SidebarProps) {
       onClick={() => router.push(item.path)}
       className={classes.linkItem}
       sx={(theme) => ({
-        opacity: isActive(item.path) ? 1 : 0.5,
         background: isActive(item.path) ? theme.colors.dark[8] : "transparent",
+        color: isActive(item.path)
+          ? theme.colors.dark[1]
+          : theme.colors.dark[3],
       })}
     >
       <Box className={classes.linkItemIconWrapper}>
