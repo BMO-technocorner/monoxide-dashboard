@@ -98,6 +98,14 @@ const useStyles = createStyles((theme) => ({
     fontSize: 12,
     opacity: 0.9,
   },
+
+  linkLabel: {
+    fontSize: 12,
+
+    [theme.fn.largerThan(1000)]: {
+      fontSize: 14,
+    },
+  },
 }));
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
@@ -157,14 +165,14 @@ export default function Sidebar({ opened }: SidebarProps) {
     >
       <Box className={classes.linkItemIconWrapper}>
         {item.icon}
-        <Text size={largeScreen ? "sm" : "xs"}>{item.label}</Text>
+        <Text className={classes.linkLabel}>{item.label}</Text>
       </Box>
     </Box>
   ));
 
   return (
     <Navbar
-      hiddenBreakpoint="md"
+      hiddenBreakpoint={1000}
       hidden={!opened}
       width={{ xs: "100%", sm: 300, lg: 300 }}
       p="md"

@@ -23,6 +23,15 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+
+  container: {
+    paddingLeft: 0,
+    marginTop: 78,
+
+    [theme.fn.largerThan(1000)]: {
+      paddingLeft: 324,
+    },
+  },
 }));
 
 export default function AppLayout({
@@ -41,7 +50,7 @@ export default function AppLayout({
       navbar={<Sidebar opened={opened} />}
       header={<Header opened={opened} handleOpen={handleOpen} />}
     >
-      <Container size="md" pl={largeScreen ? 324 : 0} mt={78} pr={0}>
+      <Container size="md" className={classes.container}>
         {title && (
           <Box className={classes.headingWrapper}>
             <Text className={classes.titleText}>{title}</Text>
