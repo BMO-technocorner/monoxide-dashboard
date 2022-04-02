@@ -5,19 +5,12 @@ import {
   Avatar,
   Text,
   createStyles,
-  Group,
   Menu,
   UnstyledButton,
   UnstyledButtonProps,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import {
-  ChevronRight,
-  Leaf,
-  Logout,
-  Settings,
-  SwitchHorizontal,
-} from "tabler-icons-react";
+import { Logout, Settings } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { appLinks } from "@/config/navigation";
 
@@ -59,6 +52,7 @@ const useStyles = createStyles((theme) => ({
 
     "&:hover": {
       color: theme.colors.dark[2],
+      background: theme.colors.dark[6],
     },
   },
 
@@ -159,7 +153,7 @@ export default function Sidebar({ opened }: SidebarProps) {
       onClick={() => router.push(item.path)}
       className={classes.linkItem}
       sx={(theme) => ({
-        background: isActive(item.path) ? theme.colors.dark[8] : "transparent",
+        background: isActive(item.path) ? theme.colors.dark[6] : "transparent",
         color: isActive(item.path)
           ? theme.colors.dark[1]
           : theme.colors.dark[3],
@@ -181,7 +175,12 @@ export default function Sidebar({ opened }: SidebarProps) {
       fixed
       position={{ top: 0, left: 0 }}
     >
-      <Navbar.Section grow>{renderLinks}</Navbar.Section>
+      <Navbar.Section
+        grow
+        sx={{ display: "flex", flexDirection: "column", gap: 5 }}
+      >
+        {renderLinks}
+      </Navbar.Section>
 
       <Navbar.Section>
         <Menu
