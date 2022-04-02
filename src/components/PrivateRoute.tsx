@@ -24,13 +24,23 @@ export default function PrivateRoute({
 
   React.useEffect(() => {
     if (!isLoading && !isAuthenticated && isProtected) {
-      router.push("/events");
+      router.push("/auth/signin");
     }
   }, [isLoading, isAuthenticated, isProtected, router]);
 
   if ((isLoading || !isAuthenticated) && isProtected) {
     return (
-      <Container sx={{ width: "100%", height: "100vh" }}>
+      <Container
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          gap: 16,
+        }}
+      >
         <Loader color="grape" />
         <Text>Loading</Text>
       </Container>

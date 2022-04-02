@@ -61,7 +61,8 @@ export default function AppLayout({
   const { classes } = useStyles();
 
   //#region  //*=========== COMMONS ===========
-  const protectedRoutes = ["/myevents"];
+  // const protectedRoutes = ['/', '/users', '/settings', '/devices', '/report'];
+  const protectedRoutes = [""];
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { query, pathname } = router;
@@ -117,7 +118,7 @@ export default function AppLayout({
         navbar={<Sidebar opened={opened} />}
         header={<Header opened={opened} handleOpen={handleOpen} />}
       >
-        <Container size="md" className={classes.container}>
+        <Container size="lg" className={classes.container}>
           {title && (
             <Box className={classes.headingWrapper}>
               <Text className={classes.titleText}>{title}</Text>
