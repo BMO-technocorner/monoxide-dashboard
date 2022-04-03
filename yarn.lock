@@ -2595,7 +2595,7 @@ cookie@^0.4.0:
 
 cookies-next@^2.0.4:
   version "2.0.4"
-  resolved "https://registry.npmjs.org/cookies-next/-/cookies-next-2.0.4.tgz"
+  resolved "https://registry.yarnpkg.com/cookies-next/-/cookies-next-2.0.4.tgz#d6a876c6957c856678fa06222877ebbbca32ce0e"
   integrity sha512-fqjwJNksW/WEu8ou1SEXJCKYyg7nrQRsjlfbIF5tp96SrQq1Fzome1To27tPxhoPN/vgFuzCt573Pri9bE+H+g==
   dependencies:
     "@types/cookie" "^0.4.1"

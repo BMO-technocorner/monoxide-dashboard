@@ -8,6 +8,8 @@ import PrivateRoute from "@/components/PrivateRoute";
 import axiosClient from "@/config/axios";
 import useAuthStore from "@/store/useAuthStore";
 import { useRouter } from "next/router";
+import { getCookie, setCookies } from "cookies-next";
+import { UserRole } from "@/types/auth";
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -47,8 +49,12 @@ export interface AuthApi {
 export type User = {
   id: number;
   name: string;
-  photo: string;
+  email: string;
+  role: UserRole;
+  updatedAt: string;
+  createdAt: string;
   token: string;
+  tokenExpiredIn: string;
 };
 
 export default function AppLayout({
@@ -56,14 +62,12 @@ export default function AppLayout({
   title,
   headingCustom,
 }: AppLayoutProps) {
-  const largeScreen = useMediaQuery("(min-width: 1000px)");
   const [opened, setOpened] = useState(false);
   const { classes } = useStyles();
 
   //#region  //*=========== COMMONS ===========
   // const protectedRoutes = ['/', '/users', '/settings', '/devices', '/report'];
   const protectedRoutes = [""];
-  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { query, pathname } = router;
   //#endregion  //*======== COMMONS ===========
@@ -77,9 +81,9 @@ export default function AppLayout({
     const loadUser = async () => {
       try {
         if (query.token) {
-          localStorage.setItem("token", query.token as string);
+          setCookies("token", query.token as string);
         }
-        const token = localStorage.getItem("token");
+        const token = getCookie("token");
 
         if (token === null || token === undefined) {
           return;
@@ -94,8 +98,12 @@ export default function AppLayout({
         login({
           id: res.data.data.id,
           name: res.data.data.name,
-          photo: res.data.data.photo,
+          email: res.data.data.email,
+          role: res.data.data.role,
+          updatedAt: res.data.data.updatedAt,
+          createdAt: res.data.data.createdAt,
           token: token + "",
+          tokenExpiredIn: res.data.data.tokenExpiredIn,
         });
       } catch (err) {
         // eslint-disable-next-line no-console

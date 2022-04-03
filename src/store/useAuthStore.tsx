@@ -2,6 +2,7 @@ import { createSelectorHooks } from "auto-zustand-selectors-hook";
 import produce from "immer";
 import create from "zustand";
 import { devtools } from "zustand/middleware";
+import { removeCookies, setCookies } from "cookies-next";
 
 import { User } from "@/types/auth";
 
@@ -21,7 +22,7 @@ const useAuthStoreBase = create<AuthStoreType>(
       isAuthenticated: false,
       isLoading: true,
       login: (user) => {
-        localStorage.setItem("token", user.token);
+        setCookies("token", user.token);
         set(
           produce<AuthStoreType>((state) => {
             state.isAuthenticated = true;
@@ -30,7 +31,7 @@ const useAuthStoreBase = create<AuthStoreType>(
         );
       },
       logout: () => {
-        localStorage.removeItem("token");
+        removeCookies("token");
         set(
           produce<AuthStoreType>((state) => {
             state.isAuthenticated = false;

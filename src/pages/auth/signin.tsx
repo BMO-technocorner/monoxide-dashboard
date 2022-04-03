@@ -17,6 +17,7 @@ import { ArrowLeft, ArrowRight, Eye, EyeOff, Leaf } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
+import { authSignIn } from "@/services/auth";
 
 type SignInProps = {};
 
@@ -124,6 +125,17 @@ const SignIn = ({}: SignInProps) => {
 
   const handleChangeShowPassword = () => setShowPassword((v: boolean) => !v);
 
+  const handleLogin = async (values: any) => {
+    console.log(values);
+    try {
+      const res = await authSignIn(values);
+
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <AuthLayout>
       <Box className={classes.contentWrapper} p={24}>
@@ -132,13 +144,7 @@ const SignIn = ({}: SignInProps) => {
           <Text className={classes.title}>Monoxide</Text>
         </Box>
 
-        <form
-          onSubmit={form.onSubmit((values) => {
-            console.log(values);
-            router.push("/");
-          })}
-          className={classes.form}
-        >
+        <form onSubmit={form.onSubmit(handleLogin)} className={classes.form}>
           <Card className={classes.card}>
             <TextInput
               label="Email"
