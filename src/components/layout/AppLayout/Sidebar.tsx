@@ -194,7 +194,7 @@ export default function Sidebar({ opened }: SidebarProps) {
             <UserButton
               data={{
                 name: "Muhammad Bhaska",
-                avatar: "https:/github.com/mhmdbhsk.png",
+                avatar: "https://github.com/mhmdbhsk.png",
                 role: 1,
               }}
             />
