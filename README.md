@@ -13,6 +13,6 @@
 
 ## :desktop_computer: Monoxide Dashboard
 
-Another dashboard management panel for Monoxide Ecosystem.
+Monoxide Ecosystem's mobile-optimized frontend that took all the right vitamins.
 
 > Written in [Typescript](https://www.typescriptlang.org) using [Next](https://nextjs.org) and [React](https://reactjs.org).
