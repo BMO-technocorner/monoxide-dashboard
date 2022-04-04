@@ -1,4 +1,4 @@
-<a href="https://app.netlify.com/sites/manage-monoxide/deploys">
+<a href="https://app.netlify.com/sites/monoxide/deploys">
   <img src="https://api.netlify.com/api/v1/badges/f9c4501b-bee1-4515-a2e9-ae45b375ab4e/deploy-status" alt="Build"/>
 </a>
 <a href="https://github.com/BMO-technocorner/monoxide-dashboard/actions/workflows/codeql-analysis.yml">
@@ -15,4 +15,4 @@
 
 Monoxide Ecosystem's mobile-optimized frontend that took all the right vitamins.
 
-> Written in [Typescript](https://www.typescriptlang.org) using [Next](https://nextjs.org) and [React](https://reactjs.org).
+> Written in [Typescript](https://www.typescriptlang.org) using [Next](https://nextjs.org) and [React](https://reactjs.org). Powered by [Netlify](https://www.netlify.com).
