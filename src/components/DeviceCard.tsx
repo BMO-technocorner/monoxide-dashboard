@@ -41,11 +41,11 @@ type DeviceCardProps = {
 };
 
 const useStyles = createStyles((theme) => {
-  const largeScreen = useMediaQuery("(min-width: 900px)");
-
   return {
     card: {
-      border: "1px solid #2C2E33",
+      border: `1px solid ${
+        theme.colorScheme === "dark" ? "#2C2E33" : theme.colors.gray[3]
+      }`,
       borderRadius: 8,
       display: "flex",
       flexGrow: 1,
@@ -55,7 +55,10 @@ const useStyles = createStyles((theme) => {
 
     staticBgRound: {
       position: "absolute",
-      background: theme.colors.dark[5],
+      background:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[5]
+          : theme.colors.gray[1],
       borderRadius: "99999px 99999px 0 0",
       height: 70,
       bottom: 30,
@@ -65,7 +68,10 @@ const useStyles = createStyles((theme) => {
 
     staticBgSquare: {
       position: "absolute",
-      background: theme.colors.dark[5],
+      background:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[5]
+          : theme.colors.gray[1],
       height: 40,
       bottom: 0,
       left: 0,
@@ -90,8 +96,17 @@ const useStyles = createStyles((theme) => {
 
     deviceImageStatusBadge: {
       padding: 12,
-      border: `5px solid ${theme.colors.dark[6]}`,
-      background: theme.colors.dark[4],
+      border: `5px solid ${
+        theme.colorScheme === "dark" ? theme.colors.dark[6] : "#fff"
+      }`,
+      background:
+        theme.colorScheme === "dark"
+          ? theme.colors.gray[1]
+          : theme.colors.dark[4],
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[4]
+          : theme.colors.gray[1],
     },
 
     contentWrapper: {

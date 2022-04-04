@@ -26,7 +26,7 @@ const useStyles = createStyles({
 });
 
 const Devices = ({}: DevicesProps) => {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const modals = useModals();
   const [opened, setOpened] = useState<DevicesModalType>(null);
 
@@ -37,14 +37,20 @@ const Devices = ({}: DevicesProps) => {
       title: "Input Device Information",
       closeOnConfirm: false,
       labels: { confirm: "Next", cancel: "Cancel" },
-      confirmProps: { color: "grape", variant: "light" },
+      confirmProps: {
+        color: "grape",
+        variant: theme.colorScheme === "dark" ? "light" : "filled",
+      },
       centered: true,
       children: <DeviceAddForm />,
       onConfirm: () =>
         modals.openConfirmModal({
           title: "Input Device Location",
           labels: { confirm: "Finish", cancel: "Back" },
-          confirmProps: { color: "grape", variant: "light" },
+          confirmProps: {
+            color: "grape",
+            variant: theme.colorScheme === "dark" ? "light" : "filled",
+          },
           closeOnConfirm: false,
           centered: true,
           children: <DeviceAddMaps />,
@@ -59,7 +65,7 @@ const Devices = ({}: DevicesProps) => {
         <Button
           leftIcon={<Plus size={14} />}
           onClick={openAddDeviceModal}
-          variant="light"
+          variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
           Add Device

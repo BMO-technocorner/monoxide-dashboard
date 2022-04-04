@@ -51,8 +51,14 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 8,
 
     "&:hover": {
-      color: theme.colors.dark[2],
-      background: theme.colors.dark[6],
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[2]
+          : theme.colors.dark[4],
+      background:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[1],
     },
   },
 
@@ -71,8 +77,11 @@ const useStyles = createStyles((theme) => ({
     height: 72,
     width: "100%",
     borderRadius: 8,
-    backgroundColor: theme.colors.dark[6],
-    border: "1px solid #2C2E33",
+    background:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[2],
+    border: `1px solid ${theme.colorScheme === "dark" ? "#2C2E33" : "none"}`,
   },
 
   userButtonTextWrapper: {
@@ -135,7 +144,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
 );
 
 export default function Sidebar({ opened }: SidebarProps) {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const router = useRouter();
   const largeScreen = useMediaQuery("(min-width: 1000px)");
 
@@ -153,10 +162,22 @@ export default function Sidebar({ opened }: SidebarProps) {
       onClick={() => router.push(item.path)}
       className={classes.linkItem}
       sx={(theme) => ({
-        background: isActive(item.path) ? theme.colors.dark[6] : "transparent",
-        color: isActive(item.path)
-          ? theme.colors.dark[1]
-          : theme.colors.dark[3],
+        background:
+          theme.colorScheme === "dark"
+            ? isActive(item.path)
+              ? theme.colors.dark[6]
+              : "transparent"
+            : isActive(item.path)
+            ? theme.colors.gray[2]
+            : "transparent",
+        color:
+          theme.colorScheme === "dark"
+            ? isActive(item.path)
+              ? theme.colors.dark[1]
+              : theme.colors.dark[3]
+            : isActive(item.path)
+            ? theme.colors.dark[3]
+            : theme.colors.dark[1],
       })}
     >
       <Box className={classes.linkItemIconWrapper}>

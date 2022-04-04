@@ -55,7 +55,9 @@ const useStyles = createStyles((theme) => {
 
   return {
     card: {
-      border: "1px solid #2C2E33",
+      border: `1px solid ${
+        theme.colorScheme === "dark" ? "#2C2E33" : theme.colors.gray[3]
+      }`,
       borderRadius: 8,
       display: "flex",
       gap: 16,
@@ -94,7 +96,6 @@ const useStyles = createStyles((theme) => {
     },
 
     placeText: {
-      color: theme.colors.dark[0],
       fontSize: largeScreen ? 14 : 12,
       textDecoration: "underline",
       textDecorationColor: theme.colors.dark[3],
@@ -111,7 +112,7 @@ const useStyles = createStyles((theme) => {
 });
 
 const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const largeScreen = useMediaQuery("(min-width: 900px)");
   const modals = useModals();
 
@@ -174,7 +175,10 @@ const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
               href={`https://maps.google.com/?q=${data.device.location.lat},${data.device.location.lng}`}
               target="_blank"
             >
-              <Text className={classes.placeText}>
+              <Text
+                color={theme.colorScheme === "dark" ? "dimmed" : "#000"}
+                className={classes.placeText}
+              >
                 {data.device.location.geocode}
               </Text>
               <ExternalLink color="#909296" size={12} />
@@ -200,7 +204,7 @@ const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
             transitionDuration={200}
           >
             <ActionIcon
-              variant="light"
+              variant={theme.colorScheme === "dark" ? "light" : "filled"}
               color="red"
               size={"lg"}
               onClick={() => handleOpen("contact")}
@@ -215,7 +219,7 @@ const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
             transitionDuration={200}
           >
             <ActionIcon
-              variant="light"
+              variant={theme.colorScheme === "dark" ? "light" : "filled"}
               color="green"
               size={"lg"}
               onClick={openResolveConfirmModal}

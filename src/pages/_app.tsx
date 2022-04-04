@@ -1,13 +1,35 @@
 import { AppProps } from "next/app";
-import { MantineProvider } from "@mantine/core";
 import { Fonts, theme } from "@/theme";
 import NextProgress from "next-progress";
 import { ModalsProvider } from "@mantine/modals";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Head from "next/head";
+import {
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
+} from "@mantine/core";
+import { useColorScheme, useHotkeys } from "@mantine/hooks";
+import { getCookie, setCookies } from "cookies-next";
+import { GetServerSidePropsContext } from "next";
 
-export default function App(props: AppProps) {
+export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(
+    props.colorScheme
+  );
+
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const nextColorScheme =
+      value || (colorScheme === "dark" ? "light" : "dark");
+    setColorScheme(nextColorScheme);
+    // when color scheme is updated save it to cookie
+    setCookies("mantine-color-scheme", nextColorScheme, {
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  };
+
+  useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
   return (
     <Fragment>
@@ -97,13 +119,27 @@ export default function App(props: AppProps) {
           content={`${process.env.NEXT_PUBLIC_URL}/apple-touch-icon.png`}
         />
       </Head>
-      <MantineProvider theme={{ ...theme }} withGlobalStyles withNormalizeCSS>
-        <ModalsProvider>
-          <NextProgress color="#fff" />
-          <Fonts />
-          <Component {...pageProps} />
-        </ModalsProvider>
-      </MantineProvider>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
+      >
+        <MantineProvider
+          theme={{ ...theme, colorScheme }}
+          withGlobalStyles
+          withNormalizeCSS
+        >
+          <ModalsProvider>
+            <NextProgress color="#fff" />
+            <Fonts />
+            <Component {...pageProps} />
+          </ModalsProvider>
+        </MantineProvider>
+      </ColorSchemeProvider>
     </Fragment>
   );
 }
+
+App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
+  // get color scheme from cookie
+  colorScheme: getCookie("mantine-color-scheme", ctx) || "light",
+});

@@ -15,7 +15,9 @@ import { z } from "zod";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    border: "1px solid #2C2E33",
+    border: `1px solid ${
+      theme.colorScheme === "dark" ? "#2C2E33" : theme.colors.gray[3]
+    }`,
   },
 
   item: {
@@ -65,7 +67,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface AccountSettingsCardProps {}
+interface SettingsAccountCardProps {}
 
 const userSchema = z.object({
   fullName: z
@@ -81,8 +83,8 @@ const userSchema = z.object({
     .nonempty(),
 });
 
-export default function AccountSettingsCard({}: AccountSettingsCardProps) {
-  const { classes } = useStyles();
+export default function SettingsAccountCard({}: SettingsAccountCardProps) {
+  const { classes, theme } = useStyles();
   const [editProfile, setEditProfile] = useState(false);
   const form = useForm({
     schema: zodResolver(userSchema),
@@ -132,7 +134,7 @@ export default function AccountSettingsCard({}: AccountSettingsCardProps) {
           onClick={() =>
             !editProfile ? handleChangeEditProfile() : console.log("test")
           }
-          variant="light"
+          variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
           {!editProfile ? "Edit Profile" : "Save changes"}

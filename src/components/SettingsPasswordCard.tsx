@@ -14,7 +14,9 @@ import { z } from "zod";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    border: "1px solid #2C2E33",
+    border: `1px solid ${
+      theme.colorScheme === "dark" ? "#2C2E33" : theme.colors.gray[3]
+    }`,
   },
 
   item: {
@@ -68,7 +70,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface PasswordSettingsCardProps {}
+interface SettingsPasswordCardProps {}
 
 const passwordSchema = z
   .object({
@@ -90,8 +92,8 @@ const passwordSchema = z
     path: ["passwordConfirmation"],
   });
 
-export default function PasswordSettingsCard({}: PasswordSettingsCardProps) {
-  const { classes } = useStyles();
+export default function SettingsPasswordCard({}: SettingsPasswordCardProps) {
+  const { classes, theme } = useStyles();
   const [showPasswordOld, setShowPasswordOld] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
@@ -171,7 +173,7 @@ export default function PasswordSettingsCard({}: PasswordSettingsCardProps) {
         <Button
           type="submit"
           sx={{ width: 150, fontSize: 12 }}
-          variant="light"
+          variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
           Change Password

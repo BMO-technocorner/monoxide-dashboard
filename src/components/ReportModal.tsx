@@ -1,6 +1,5 @@
-import { Box, Button, Group, Modal, Text } from "@mantine/core";
-import { useModals } from "@mantine/modals";
-import { Check, PhoneCalling, X } from "tabler-icons-react";
+import { Box, Button, Group, Modal, useMantineTheme } from "@mantine/core";
+import { PhoneCalling } from "tabler-icons-react";
 
 export type ReportModalType = "contact" | "resolve" | "details" | null;
 
@@ -10,6 +9,8 @@ type ReportModalProps = {
 };
 
 export default function ReportModal({ opened, handleOpen }: ReportModalProps) {
+  const theme = useMantineTheme();
+
   return (
     <Modal
       opened={opened !== null}
@@ -22,7 +23,7 @@ export default function ReportModal({ opened, handleOpen }: ReportModalProps) {
           <Group grow direction="column">
             <Button
               color="red"
-              variant="light"
+              variant={theme.colorScheme === "dark" ? "light" : "filled"}
               leftIcon={<PhoneCalling size={14} />}
               size={"xs"}
             >
@@ -30,7 +31,7 @@ export default function ReportModal({ opened, handleOpen }: ReportModalProps) {
             </Button>
             <Button
               color="red"
-              variant="light"
+              variant={theme.colorScheme === "dark" ? "light" : "filled"}
               leftIcon={<PhoneCalling size={14} />}
               size={"xs"}
             >

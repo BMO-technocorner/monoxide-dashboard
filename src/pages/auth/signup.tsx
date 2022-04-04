@@ -73,7 +73,9 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     gap: 16,
-    border: "1px solid #2C2E33",
+    border: `1px solid ${
+      theme.colorScheme === "dark" ? "#2C2E33" : theme.colors.gray[3]
+    }`,
   },
 
   link: {
@@ -145,7 +147,7 @@ const registerSchema = z
 type registerSchema = z.infer<typeof registerSchema>;
 
 const SignUp = ({}: SignUpProps) => {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const form = useForm({
@@ -232,7 +234,7 @@ const SignUp = ({}: SignUpProps) => {
 
           <Box className={classes.buttonWrapper}>
             <Button
-              variant="light"
+              variant={theme.colorScheme === "dark" ? "light" : "filled"}
               color="grape"
               className={classes.fullWidth}
               type="submit"

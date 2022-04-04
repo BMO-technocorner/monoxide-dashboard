@@ -1,8 +1,10 @@
 import AppLayout from "@/components/layout/AppLayout";
 import { Box, createStyles } from "@mantine/core";
 import React from "react";
-import AccountSettingsCard from "@/components/AccountSettingsCard";
-import PasswordSettingsCard from "@/components/PasswordSettingsCard";
+import SettingsAccountCard from "@/components/SettingsAccountCard";
+import SettingsPasswordCard from "@/components/SettingsPasswordCard";
+import ThemeToggle from "@/components/ThemeToggle";
+import SettingsThemeCard from "@/components/SettingsThemeCard";
 
 type SettingsProps = {};
 
@@ -20,8 +22,9 @@ const Settings = ({}: SettingsProps) => {
   return (
     <AppLayout title="Settings">
       <Box className={classes.contentWrapper}>
-        <AccountSettingsCard />
-        <PasswordSettingsCard />
+        <SettingsAccountCard />
+        <SettingsPasswordCard />
+        <SettingsThemeCard />
       </Box>
     </AppLayout>
   );
