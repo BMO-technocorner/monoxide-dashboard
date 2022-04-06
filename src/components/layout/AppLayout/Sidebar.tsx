@@ -7,7 +7,6 @@ import {
   createStyles,
   Menu,
   UnstyledButton,
-  UnstyledButtonProps,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { Logout, Settings } from "tabler-icons-react";
@@ -26,7 +25,7 @@ type UserButtonProps = {
     avatar: string;
     role: 1 | 2 | 3;
   };
-} & UnstyledButtonProps;
+};
 
 const userButtonLinks = [
   {
