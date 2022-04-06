@@ -3,8 +3,8 @@ import { AppShell, Box, Container, createStyles, Text } from "@mantine/core";
 import Sidebar from "./Sidebar";
 import { ReactNode } from "react";
 import Header from "./Header";
-import { UserRole } from "@/types/auth";
 import PrivateRoute from "@/components/PrivateRoute";
+import { UserRole } from "@/types/profile";
 
 type AppLayoutProps = {
   children: ReactNode;

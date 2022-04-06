@@ -106,7 +106,7 @@ const useStyles = createStyles((theme) => ({
 
 const UserButton = forwardRef<HTMLButtonElement>(({ ...others }, ref) => {
   const { classes } = useStyles();
-  const { user, loading } = useAuthState();
+  const { user } = useAuthState();
 
   return (
     <UnstyledButton
@@ -204,15 +204,7 @@ export default function Sidebar({ opened }: SidebarProps) {
           sx={{ width: "100%" }}
           position={largeScreen ? "right" : "top"}
           placement={largeScreen ? "end" : "center"}
-          control={
-            <UserButton
-              data={{
-                name: "Muhammad Bhaska",
-                avatar: "https://github.com/mhmdbhsk.png",
-                role: 1,
-              }}
-            />
-          }
+          control={<UserButton />}
         >
           <Menu.Label>Account</Menu.Label>
           {userButtonLinks.map((link) => (
