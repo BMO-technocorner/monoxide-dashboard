@@ -1,16 +1,16 @@
 // import axios from 'axios';
-import { User } from "@/types/auth";
 import { getCookie } from "cookies-next";
 import React, { createContext, useContext, useEffect, useReducer } from "react";
+import { ResponseSignIn } from "@/types/auth";
 
 type AuthState = {
   authenticated: boolean;
-  user: User | null;
+  user: ResponseSignIn | null;
   loading: boolean;
 };
 type Action =
-  | { type: "LOGIN"; payload: User }
-  | { type: "POPULATE"; payload: User }
+  | { type: "LOGIN"; payload: ResponseSignIn }
+  | { type: "POPULATE"; payload: ResponseSignIn }
   | { type: "LOGOUT" }
   | { type: "STOP_LOADING" };
 type Dispatch = React.Dispatch<Action>;

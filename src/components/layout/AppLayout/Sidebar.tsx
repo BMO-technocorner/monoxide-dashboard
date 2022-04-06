@@ -116,18 +116,18 @@ const UserButton = forwardRef<HTMLButtonElement>(({ ...others }, ref) => {
       {...others}
     >
       <Avatar
-        alt={user.name}
+        alt={user?.name}
         radius={"xl"}
         size="md"
         sx={{ textTransform: "uppercase" }}
       >
-        {user.name.split(" ").slice(0, 2)[0]?.substring(0, 1)}
-        {user.name.split(" ").slice(0, 2)[1]?.substring(0, 1)}
+        {user?.name.split(" ").slice(0, 2)[0]?.substring(0, 1)}
+        {user?.name.split(" ").slice(0, 2)[1]?.substring(0, 1)}
       </Avatar>
       <Box className={classes.userButtonTextWrapper}>
-        <Text className={classes.userButtonName}>{user.name}</Text>
+        <Text className={classes.userButtonName}>{user?.name}</Text>
         <Text className={classes.userButtonRole}>
-          {user.role === "CLIENT" ? "User" : "Observer"}
+          {user?.role === "CLIENT" ? "User" : "Observer"}
         </Text>
       </Box>
     </UnstyledButton>
