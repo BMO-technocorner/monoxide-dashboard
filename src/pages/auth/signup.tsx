@@ -8,7 +8,6 @@ import {
   Center,
   Checkbox,
   createStyles,
-  Divider,
   Text,
   TextInput,
 } from "@mantine/core";

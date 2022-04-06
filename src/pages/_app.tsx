@@ -1,5 +1,5 @@
 import { AppProps } from "next/app";
-import { Fonts, theme } from "@/theme";
+import { Fonts, theme as customTheme } from "@/theme";
 import NextProgress from "next-progress";
 import { ModalsProvider } from "@mantine/modals";
 import { Fragment, useState } from "react";
@@ -8,16 +8,19 @@ import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
+  useMantineTheme,
 } from "@mantine/core";
-import { useColorScheme, useHotkeys } from "@mantine/hooks";
+import { useHotkeys } from "@mantine/hooks";
 import { getCookie, setCookies } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
+import { AuthProvider } from "@/store/AuthContext";
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>(
     props.colorScheme
   );
+  const theme = useMantineTheme();
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
@@ -119,22 +122,29 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           content={`${process.env.NEXT_PUBLIC_URL}/apple-touch-icon.png`}
         />
       </Head>
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
-      >
-        <MantineProvider
-          theme={{ ...theme, colorScheme }}
-          withGlobalStyles
-          withNormalizeCSS
+
+      <AuthProvider>
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
         >
-          <ModalsProvider>
-            <NextProgress color="#fff" />
-            <Fonts />
-            <Component {...pageProps} />
-          </ModalsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+          <MantineProvider
+            theme={{ ...customTheme, colorScheme }}
+            withGlobalStyles
+            withNormalizeCSS
+          >
+            <ModalsProvider>
+              <NextProgress
+                color={
+                  theme.colorScheme === "dark" ? "#fff" : theme.colors.grape[5]
+                }
+              />
+              <Fonts />
+              <Component {...pageProps} />
+            </ModalsProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </AuthProvider>
     </Fragment>
   );
 }

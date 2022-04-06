@@ -13,6 +13,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import { Logout, Settings } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { appLinks } from "@/config/navigation";
+import { useAuthDispatch, useAuthState } from "@/store/AuthContext";
+import { removeCookies } from "cookies-next";
 
 type SidebarProps = {
   opened: boolean;
@@ -114,6 +116,7 @@ const useStyles = createStyles((theme) => ({
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   ({ data, ...others }: UserButtonProps, ref) => {
     const { classes } = useStyles();
+    const { user, loading } = useAuthState();
 
     return (
       <UnstyledButton
@@ -147,12 +150,13 @@ export default function Sidebar({ opened }: SidebarProps) {
   const { classes, theme } = useStyles();
   const router = useRouter();
   const largeScreen = useMediaQuery("(min-width: 1000px)");
+  const dispatch = useAuthDispatch();
 
   const isActive = (link: string) => router.pathname === link;
 
   const handleLogout = () => {
-    router.push("/auth/signin");
-    console.log("Logout berhasil");
+    dispatch({ type: "LOGOUT" });
+    removeCookies("user");
   };
 
   const renderLinks = appLinks.map((item) => (

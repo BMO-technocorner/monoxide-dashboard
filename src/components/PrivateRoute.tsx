@@ -1,12 +1,11 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import * as React from "react";
-
-import useAuthStore from "@/store/useAuthStore";
 import { Container, Loader, Text } from "@mantine/core";
+import { useAuthState } from "@/store/AuthContext";
 
 type PrivateRouteProps = {
-  protectedRoutes: string[];
-  children: JSX.Element;
+  protectedRoutes: Array<string>;
+  children: React.ReactNode;
 };
 
 export default function PrivateRoute({
@@ -14,21 +13,18 @@ export default function PrivateRoute({
   children,
 }: PrivateRouteProps) {
   const router = useRouter();
+  const { authenticated, loading } = useAuthState();
 
-  //#region  //*=========== STORE ===========
-  const isAuthenticated = useAuthStore.useIsAuthenticated();
-  const isLoading = useAuthStore.useIsLoading();
-  //#endregion  //*======== STORE ===========
+  const pathIsProtected = protectedRoutes.indexOf(router.pathname) !== -1;
 
-  const isProtected = protectedRoutes.indexOf(router.pathname) !== -1;
-
-  React.useEffect(() => {
-    if (!isLoading && !isAuthenticated && isProtected) {
+  useEffect(() => {
+    if (!loading && !authenticated && pathIsProtected) {
+      // Redirect route, you can point this to /login
       router.push("/auth/signin");
     }
-  }, [isLoading, isAuthenticated, isProtected, router]);
+  }, [loading, authenticated, pathIsProtected, router]);
 
-  if ((isLoading || !isAuthenticated) && isProtected) {
+  if ((loading || !authenticated) && pathIsProtected) {
     return (
       <Container
         sx={{
@@ -47,5 +43,5 @@ export default function PrivateRoute({
     );
   }
 
-  return children;
+  return <>{children}</>;
 }

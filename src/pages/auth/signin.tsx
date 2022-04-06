@@ -7,17 +7,18 @@ import {
   Card,
   Center,
   createStyles,
-  Divider,
   Group,
   Text,
   TextInput,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, Eye, EyeOff, Leaf } from "tabler-icons-react";
+import { Eye, EyeOff, Leaf } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
 import { authSignIn } from "@/services/auth";
+import { useAuthDispatch, useAuthState } from "@/store/AuthContext";
+import { setCookies } from "cookies-next";
 
 type SignInProps = {};
 
@@ -116,7 +117,9 @@ const useStyles = createStyles((theme) => ({
 const SignIn = ({}: SignInProps) => {
   const { classes, theme } = useStyles();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useAuthDispatch();
   const form = useForm({
     schema: zodResolver(loginSchema),
     initialValues: {
@@ -128,13 +131,22 @@ const SignIn = ({}: SignInProps) => {
   const handleChangeShowPassword = () => setShowPassword((v: boolean) => !v);
 
   const handleLogin = async (values: any) => {
-    console.log(values);
+    setIsLoading(true);
     try {
       const res = await authSignIn(values);
 
-      console.log(res);
+      dispatch({
+        type: "LOGIN",
+        payload: res.data,
+      });
+
+      setCookies("user", res.data);
+
+      router.push("/");
+      setIsLoading(false);
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
   };
 
@@ -190,6 +202,7 @@ const SignIn = ({}: SignInProps) => {
               disabled={
                 form.values.email && form.values.password ? false : true
               }
+              loading={isLoading}
             >
               Login
             </Button>
