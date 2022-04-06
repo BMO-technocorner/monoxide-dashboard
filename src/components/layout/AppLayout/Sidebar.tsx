@@ -19,14 +19,6 @@ type SidebarProps = {
   opened: boolean;
 };
 
-type UserButtonProps = {
-  data: {
-    name: string;
-    avatar: string;
-    role: 1 | 2 | 3;
-  };
-};
-
 const userButtonLinks = [
   {
     id: 1,
@@ -112,38 +104,35 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ data, ...others }: UserButtonProps, ref) => {
-    const { classes } = useStyles();
-    const { user, loading } = useAuthState();
+const UserButton = forwardRef<HTMLButtonElement>(({ ...others }, ref) => {
+  const { classes } = useStyles();
+  const { user, loading } = useAuthState();
 
-    return (
-      <UnstyledButton
-        ref={ref}
-        px="md"
-        className={classes.userButtonWrapper}
-        {...others}
+  return (
+    <UnstyledButton
+      ref={ref}
+      px="md"
+      className={classes.userButtonWrapper}
+      {...others}
+    >
+      <Avatar
+        alt={user.name}
+        radius={"xl"}
+        size="md"
+        sx={{ textTransform: "uppercase" }}
       >
-        <Avatar
-          alt={data.name}
-          src={data.avatar}
-          radius={"xl"}
-          size="md"
-        ></Avatar>
-        <Box className={classes.userButtonTextWrapper}>
-          <Text className={classes.userButtonName}>{data.name}</Text>
-          <Text className={classes.userButtonRole}>
-            {data.role === 1
-              ? "Administrator"
-              : data.role === 2
-              ? "Observer"
-              : "User"}
-          </Text>
-        </Box>
-      </UnstyledButton>
-    );
-  }
-);
+        {user.name.split(" ").slice(0, 2)[0].substring(0, 1)}
+        {user.name.split(" ").slice(0, 2)[1].substring(0, 1)}
+      </Avatar>
+      <Box className={classes.userButtonTextWrapper}>
+        <Text className={classes.userButtonName}>{user.name}</Text>
+        <Text className={classes.userButtonRole}>
+          {user.role === "CLIENT" ? "User" : "Observer"}
+        </Text>
+      </Box>
+    </UnstyledButton>
+  );
+});
 
 export default function Sidebar({ opened }: SidebarProps) {
   const { classes, theme } = useStyles();
