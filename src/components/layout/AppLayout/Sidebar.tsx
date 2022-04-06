@@ -70,11 +70,14 @@ const useStyles = createStyles((theme) => ({
     height: 72,
     width: "100%",
     borderRadius: 8,
-    background:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[6]
-        : theme.colors.gray[2],
-    border: `1px solid ${theme.colorScheme === "dark" ? "#2C2E33" : "none"}`,
+
+    "&:hover": {
+      background:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[8]
+          : theme.colors.gray[1],
+    },
+    // border: `1px solid ${theme.colorScheme === 'dark' ? '#2C2E33' : 'none'}`,
   },
 
   userButtonTextWrapper: {
@@ -117,7 +120,7 @@ const UserButton = forwardRef<HTMLButtonElement>(({ ...others }, ref) => {
     >
       <Avatar
         alt={user?.name}
-        radius={"xl"}
+        // radius={"xl"}
         size="md"
         sx={{ textTransform: "uppercase" }}
       >
