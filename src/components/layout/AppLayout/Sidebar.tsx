@@ -121,8 +121,8 @@ const UserButton = forwardRef<HTMLButtonElement>(({ ...others }, ref) => {
         size="md"
         sx={{ textTransform: "uppercase" }}
       >
-        {user.name.split(" ").slice(0, 2)[0].substring(0, 1)}
-        {user.name.split(" ").slice(0, 2)[1].substring(0, 1)}
+        {user.name.split(" ").slice(0, 2)[0]?.substring(0, 1)}
+        {user.name.split(" ").slice(0, 2)[1]?.substring(0, 1)}
       </Avatar>
       <Box className={classes.userButtonTextWrapper}>
         <Text className={classes.userButtonName}>{user.name}</Text>
