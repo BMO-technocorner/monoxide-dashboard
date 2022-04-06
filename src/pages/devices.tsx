@@ -1,6 +1,13 @@
 import { DevicesModalType } from "@/components/DevicesModal";
-import { DevicesData } from "@/constants/devices-data";
-import { Box, Button, Grid, createStyles } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Grid,
+  createStyles,
+  Skeleton,
+  Group,
+  Text,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { useState } from "react";
 import { Plus } from "tabler-icons-react";
@@ -8,6 +15,10 @@ import AppLayout from "@/components/layout/AppLayout";
 import DeviceAddForm from "@/components/DeviceAddForm";
 import DeviceAddMaps from "@/components/DeviceAddMaps";
 import DeviceCard from "@/components/DeviceCard";
+import useSWR from "swr";
+import { devicesService } from "@/services/devices";
+import { Device } from "@/types/devices";
+import { getMinutesBetweenDates } from "../lib/helper";
 
 type DevicesProps = {};
 
@@ -29,6 +40,12 @@ const Devices = ({}: DevicesProps) => {
   const { classes, theme } = useStyles();
   const modals = useModals();
   const [opened, setOpened] = useState<DevicesModalType>(null);
+  const { data: ListDevicesData, error } = useSWR(
+    "device_list",
+    devicesService.getListDevices
+  );
+
+  console.log(ListDevicesData);
 
   const handleOpen = (v: DevicesModalType) => setOpened(v);
 
@@ -73,15 +90,28 @@ const Devices = ({}: DevicesProps) => {
       }
     >
       <Box className={classes.contentWrapper}>
-        <Grid>
-          {DevicesData.map((device) => (
-            <Grid.Col lg={4} md={6} xs={6} key={device.id}>
-              <Box className={classes.cardWrapper}>
-                <DeviceCard device={device} handleOpen={handleOpen} />
-              </Box>
+        {!ListDevicesData ? (
+          <Grid>
+            <Grid.Col lg={4} md={6} xs={6}>
+              <Skeleton height={150} width="100%" radius="md" />
             </Grid.Col>
-          ))}
-        </Grid>
+            <Grid.Col lg={4} md={6} xs={6}>
+              <Skeleton height={150} width="100%" radius="md" />
+            </Grid.Col>
+          </Grid>
+        ) : ListDevicesData.length === 0 ? (
+          <Text>No device found</Text>
+        ) : (
+          <Grid>
+            {ListDevicesData?.map((device: Device) => (
+              <Grid.Col lg={4} md={6} xs={6} key={device.id}>
+                <Box className={classes.cardWrapper}>
+                  <DeviceCard data={device} handleOpen={handleOpen} />
+                </Box>
+              </Grid.Col>
+            ))}
+          </Grid>
+        )}
       </Box>
     </AppLayout>
   );

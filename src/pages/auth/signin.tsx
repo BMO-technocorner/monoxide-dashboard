@@ -11,13 +11,13 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Eye, EyeOff, Leaf } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
-import { authSignIn } from "@/services/auth";
-import { useAuthDispatch, useAuthState } from "@/store/AuthContext";
+import { authService } from "@/services/auth";
+import { useAuthDispatch } from "@/store/AuthContext";
 import { setCookies } from "cookies-next";
 
 type SignInProps = {};
@@ -133,14 +133,15 @@ const SignIn = ({}: SignInProps) => {
   const handleLogin = async (values: any) => {
     setIsLoading(true);
     try {
-      const res = await authSignIn(values);
+      const res = await authService.signIn(values);
 
       dispatch({
         type: "LOGIN",
-        payload: res.data,
+        payload: res,
       });
 
-      setCookies("user", res.data);
+      setCookies("user", res);
+      setCookies("token", res.token);
 
       router.push("/");
       setIsLoading(false);

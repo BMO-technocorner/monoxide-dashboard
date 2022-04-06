@@ -1,9 +1,12 @@
 import axiosClient from "@/config/axios";
+import { ResponseSignIn, SignIn } from "@/types/auth";
 
-export const authSignIn = async (body: {
-  body: { email: string; password: string };
-}) => {
-  const res = await axiosClient.post("/auth/signin", body);
+const url = "/auth";
 
-  return res;
+export const authService = {
+  signIn(body: SignIn): Promise<ResponseSignIn> {
+    return axiosClient.post(`${url}/signin`, body);
+  },
 };
+
+export type AuthService = typeof authService;

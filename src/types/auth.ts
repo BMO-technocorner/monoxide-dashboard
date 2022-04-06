@@ -1,4 +1,11 @@
-export type User = {
+import { UserRole } from "./profile";
+
+export interface SignIn {
+  email: string;
+  password: string;
+}
+
+export interface ResponseSignIn {
   id: number;
   name: string;
   email: string;
@@ -7,6 +14,4 @@ export type User = {
   createdAt: string;
   token: string;
   tokenExpiredIn: string;
-};
-
-export type UserRole = "CLIENT" | "GUARD";
+}

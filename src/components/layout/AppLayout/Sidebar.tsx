@@ -156,6 +156,7 @@ export default function Sidebar({ opened }: SidebarProps) {
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     removeCookies("user");
+    removeCookies("token");
   };
 
   const renderLinks = appLinks.map((item) => (

@@ -26,7 +26,7 @@ axiosClient.interceptors.request.use(function (config) {
 
 axiosClient.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data;
   },
   (error) => {
     if (error.response.status === 401) {
