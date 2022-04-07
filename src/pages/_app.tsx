@@ -134,11 +134,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
             withNormalizeCSS
           >
             <ModalsProvider>
-              <NextProgress
-                color={
-                  theme.colorScheme === "dark" ? "#fff" : theme.colors.grape[5]
-                }
-              />
+              <NextProgress color={theme.colors.grape[5]} />
               <Fonts />
               <Component {...pageProps} />
             </ModalsProvider>

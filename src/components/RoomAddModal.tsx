@@ -7,6 +7,7 @@ import {
   Group,
   Modal,
   TextInput,
+  useMantineTheme,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useState } from "react";
@@ -63,6 +64,7 @@ export default function RoomAddModal({
 }: RoomAddModalProps) {
   const { classes } = useStyles();
   const [isLoading, setIsLoading] = useState(false);
+  const theme = useMantineTheme();
   const form = useForm({
     schema: zodResolver(addRoomsSchema),
     initialValues: {
@@ -97,7 +99,13 @@ export default function RoomAddModal({
           {...form.getInputProps("name")}
         />
         <Group position="right">
-          <Button type="submit" className={classes.control} loading={isLoading}>
+          <Button
+            type="submit"
+            className={classes.control}
+            loading={isLoading}
+            variant={theme.colorScheme === "dark" ? "light" : "filled"}
+            color="grape"
+          >
             Add Room
           </Button>
         </Group>

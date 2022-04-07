@@ -3,7 +3,14 @@ import RoomAddModal from "@/components/RoomAddModal";
 import RoomAddForm from "@/components/RoomAddModal";
 import RoomsTable from "@/components/RoomsTable";
 import { roomsService } from "@/services/rooms";
-import { Box, Button, createStyles, Text, TextInput } from "@mantine/core";
+import {
+  Box,
+  Button,
+  createStyles,
+  Skeleton,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useModals } from "@mantine/modals";
 import React, { useState } from "react";
@@ -49,10 +56,14 @@ const Rooms = ({}: RoomsProps) => {
     >
       <RoomAddModal opened={roomAddOpened} handleOpen={handleOpen} />
       <Box className={classes.contentWrapper}>
-        <RoomsTable
-          data={ListRoomsData as ResponseListRooms}
-          editModal={() => console.log("Edit")}
-        />
+        {ListRoomsData ? (
+          <RoomsTable
+            data={ListRoomsData as ResponseListRooms}
+            editModal={() => console.log("Edit")}
+          />
+        ) : (
+          <Skeleton width="100%" height={32} />
+        )}
       </Box>
     </AppLayout>
   );

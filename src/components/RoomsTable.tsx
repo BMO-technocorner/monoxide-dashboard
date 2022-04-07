@@ -9,18 +9,10 @@ import {
   Text,
   ActionIcon,
   Menu,
+  Skeleton,
 } from "@mantine/core";
 import { Pencil, Trash } from "tabler-icons-react";
 import { ResponseListRooms } from "@/types/rooms";
-
-const useStyles = createStyles((theme) => ({
-  rowSelected: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.2)
-        : theme.colors[theme.primaryColor][0],
-  },
-}));
 
 interface UsersTableProps {
   data: ResponseListRooms;
@@ -28,8 +20,6 @@ interface UsersTableProps {
 }
 
 export default function UsersTable({ data, editModal }: UsersTableProps) {
-  const { classes, cx } = useStyles();
-
   const rows = data?.map((item) => {
     const id = item.id.toString();
 
@@ -49,7 +39,7 @@ export default function UsersTable({ data, editModal }: UsersTableProps) {
             </ActionIcon>
             <Menu transition="pop" withArrow placement="end">
               <Menu.Item icon={<Trash size={16} />} color="red">
-                Remove rooms
+                Remove room
               </Menu.Item>
             </Menu>
           </Group>
