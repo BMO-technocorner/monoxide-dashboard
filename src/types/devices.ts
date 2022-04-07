@@ -16,7 +16,7 @@ export interface Device {
   reports: ResponseReport[];
 }
 
-export type ResponseDevicesList = Device[];
+export type ResponseListDevices = Device[];
 
 export interface DeviceSync {
   id: 1;

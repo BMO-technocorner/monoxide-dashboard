@@ -1,10 +1,10 @@
 import axiosClient from "@/config/axios";
-import { ResponseDevicesList } from "@/types/devices";
+import { ResponseListDevices } from "@/types/devices";
 
 const url = "/client/devices";
 
 export const devicesService = {
-  getListDevices(): Promise<ResponseDevicesList> {
+  getListDevices(): Promise<ResponseListDevices> {
     return axiosClient.get(url);
   },
 };

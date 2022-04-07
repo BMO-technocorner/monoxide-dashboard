@@ -11,6 +11,7 @@ import {
   Menu,
 } from "@mantine/core";
 import { Pencil, Trash } from "tabler-icons-react";
+import { ResponseListRooms } from "@/types/rooms";
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -22,50 +23,46 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface UsersTableProps {
-  data: {
-    avatar: string;
-    name: string;
-    email: string;
-    deviceQty: number;
-    id: string;
-  }[];
+  data: ResponseListRooms;
 }
 
 export default function UsersTable({ data }: UsersTableProps) {
   const { classes, cx } = useStyles();
-  const [selection, setSelection] = useState([] as string[]);
-  const toggleRow = (id: string) =>
-    setSelection((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id]
-    );
-  const toggleAll = () =>
-    setSelection((current) =>
-      current.length === data.length ? [] : data.map((item) => item.id)
-    );
+  // const [selection, setSelection] = useState([] as string[]);
+  // const toggleRow = (id: string) =>
+  //   setSelection((current) =>
+  //     current.includes(id)
+  //       ? current.filter((item) => item !== id)
+  //       : [...current, id]
+  //   );
+  // const toggleAll = () =>
+  //   setSelection((current) =>
+  //     current.length === data.length
+  //       ? []
+  //       : data.map((item) => item.id.toString())
+  //   );
 
   const rows = data.map((item) => {
-    const selected = selection.includes(item.id);
+    const id = item.id.toString();
+    // const selected = selection.includes(id);
+
     return (
-      <tr key={item.id} className={cx({ [classes.rowSelected]: selected })}>
-        <td>
+      // <tr key={id} className={cx({ [classes.rowSelected]: selected })}>
+      <tr key={id}>
+        {/* <td>
           <Checkbox
-            checked={selection.includes(item.id)}
-            onChange={() => toggleRow(item.id)}
+            checked={selection.includes(id)}
+            onChange={() => toggleRow(id)}
             transitionDuration={0}
           />
-        </td>
+        </td> */}
         <td>
           <Group spacing="sm">
-            <Avatar size={26} src={item.avatar} radius={26} />
             <Text size="sm" weight={500}>
               {item.name}
             </Text>
           </Group>
         </td>
-        <td>{item.email}</td>
-        <td>{item.deviceQty}</td>
         <td>
           <Group spacing={0} position="right">
             <ActionIcon>
@@ -73,7 +70,7 @@ export default function UsersTable({ data }: UsersTableProps) {
             </ActionIcon>
             <Menu transition="pop" withArrow placement="end">
               <Menu.Item icon={<Trash size={16} />} color="red">
-                Remove user
+                Remove rooms
               </Menu.Item>
             </Menu>
           </Group>
@@ -84,10 +81,10 @@ export default function UsersTable({ data }: UsersTableProps) {
 
   return (
     <ScrollArea>
-      <Table sx={{ minWidth: 800 }} verticalSpacing="sm" highlightOnHover>
+      <Table sx={{ minWidth: "100%" }} verticalSpacing="sm" highlightOnHover>
         <thead>
           <tr>
-            <th style={{ width: 40 }}>
+            {/* <th style={{ width: 40 }}>
               <Checkbox
                 onChange={toggleAll}
                 checked={selection.length === data.length}
@@ -96,9 +93,7 @@ export default function UsersTable({ data }: UsersTableProps) {
                 }
                 transitionDuration={0}
               />
-            </th>
-            <th>User</th>
-            <th>Email</th>
+            </th> */}
             <th>Device</th>
             <th />
           </tr>

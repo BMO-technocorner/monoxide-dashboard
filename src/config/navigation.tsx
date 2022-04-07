@@ -4,10 +4,12 @@ import {
   Report,
   Users,
   Settings,
+  Box,
 } from "tabler-icons-react";
 
 export const appLinks = [
   { path: "/", label: "Overview", icon: <Home2 /> },
+  { path: "/rooms", label: "Rooms", icon: <Box /> },
   { path: "/devices", label: "Devices", icon: <BrandAppleArcade /> },
   { path: "/report", label: "Report", icon: <Report /> },
   { path: "/users", label: "Users", icon: <Users /> },
