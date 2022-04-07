@@ -1,6 +1,10 @@
 import { UserProfile } from "./profile";
 
-export interface Room {
+export interface AddRoom {
+  name: string;
+}
+
+export interface ResponseAddRoom {
   id: number;
   ownerId: number;
   name: string;
@@ -9,4 +13,4 @@ export interface Room {
   owner?: UserProfile;
 }
 
-export type ResponseListRooms = Room[];
+export type ResponseListRooms = ResponseAddRoom[];

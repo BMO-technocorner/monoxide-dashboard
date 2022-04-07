@@ -1,6 +1,6 @@
 import { UserProfile } from "./profile";
 import { ResponseReport } from "./report";
-import { Room } from "./rooms";
+import { ResponseAddRoom } from "./rooms";
 
 export interface Device {
   id: number;
@@ -11,7 +11,7 @@ export interface Device {
   createdAt: string;
   updatedAt: string;
   owner: UserProfile;
-  room: Room;
+  room: ResponseAddRoom;
   deviceSync: DeviceSync;
   reports: ResponseReport[];
 }

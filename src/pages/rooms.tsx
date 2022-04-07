@@ -1,11 +1,15 @@
 import AppLayout from "@/components/layout/AppLayout";
+import RoomAddModal from "@/components/RoomAddModal";
+import RoomAddForm from "@/components/RoomAddModal";
 import RoomsTable from "@/components/RoomsTable";
 import { roomsService } from "@/services/rooms";
-import { Box, Button, createStyles, Text } from "@mantine/core";
+import { Box, Button, createStyles, Text, TextInput } from "@mantine/core";
+import { useForm, zodResolver } from "@mantine/form";
 import { useModals } from "@mantine/modals";
-import React from "react";
-import useSWR from "swr";
-import { List, Plus } from "tabler-icons-react";
+import React, { useState } from "react";
+import useSWR, { mutate } from "swr";
+import { Plus } from "tabler-icons-react";
+import { z } from "zod";
 import { ResponseListRooms } from "../types/rooms";
 
 type RoomsProps = {};
@@ -20,27 +24,14 @@ const useStyles = createStyles({
 
 const Rooms = ({}: RoomsProps) => {
   const { classes, theme } = useStyles();
-  const modals = useModals();
+  const [roomAddOpened, setRoomAddOpened] = useState<boolean>(false);
+
+  const handleOpen = () => setRoomAddOpened((prevState) => !prevState);
+
   const { data: ListRoomsData, error } = useSWR(
     "rooms_list",
     roomsService.getListRooms
   );
-
-  console.log(ListRoomsData);
-
-  const openAddDeviceModal = () =>
-    modals.openConfirmModal({
-      title: "Add Rooms Information",
-      closeOnConfirm: false,
-      labels: { confirm: "Next", cancel: "Cancel" },
-      confirmProps: {
-        color: "grape",
-        variant: theme.colorScheme === "dark" ? "light" : "filled",
-      },
-      centered: true,
-      children: <Text>Test</Text>,
-      onConfirm: () => modals.closeAll(),
-    });
 
   return (
     <AppLayout
@@ -48,7 +39,7 @@ const Rooms = ({}: RoomsProps) => {
       headingCustom={
         <Button
           leftIcon={<Plus size={14} />}
-          onClick={openAddDeviceModal}
+          onClick={handleOpen}
           variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
@@ -56,8 +47,12 @@ const Rooms = ({}: RoomsProps) => {
         </Button>
       }
     >
+      <RoomAddModal opened={roomAddOpened} handleOpen={handleOpen} />
       <Box className={classes.contentWrapper}>
-        <RoomsTable data={ListRoomsData as ResponseListRooms} />
+        <RoomsTable
+          data={ListRoomsData as ResponseListRooms}
+          editModal={() => console.log("Edit")}
+        />
       </Box>
     </AppLayout>
   );

@@ -64,13 +64,19 @@ export default function SettingsThemeCard({}: SettingsThemeCardProps) {
   return (
     <Card withBorder radius="md" p="xl" className={classes.card}>
       <Text size="md" className={classes.title} weight={500}>
-        Account Settings
+        Theme Settings
       </Text>
       <Text size="xs" color="dimmed" mt={3} mb="xl">
-        Update your account personalization
+        Update your theme personalization
       </Text>
 
-      <Group>
+      <Group position="apart">
+        <Group direction="column" spacing={0}>
+          <Text size="sm">Theme</Text>
+          <Text size="xs" color={"dimmed"}>
+            Change default theme color
+          </Text>
+        </Group>
         <ThemeToggle />
       </Group>
     </Card>
