@@ -95,7 +95,7 @@ const useStyles = createStyles((theme) => {
 const DeviceCard = ({ data, handleOpen }: DeviceCardProps) => {
   const { classes } = useStyles();
   const deviceIdleTime = getMinutesBetweenDates(data.deviceSync.updatedAt);
-  const deviceStatus = deviceIdleTime <= 5 ? "Online" : "Offline";
+  const deviceStatus = deviceIdleTime <= 1 ? "Online" : "Offline";
 
   return (
     <Card className={classes.card}>

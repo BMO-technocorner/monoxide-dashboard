@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { getCookie } from "cookies-next";
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { ResponseSignIn } from "@/types/auth";
@@ -67,17 +66,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const user = getCookie("user");
 
-        console.log(JSON.parse(user as string));
-
         if (user === null || user === undefined) {
           return;
         }
-        // const res = await axios.get('/profile', {
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // });
 
         dispatch({ type: "LOGIN", payload: JSON.parse(user as string) });
       } catch (err) {

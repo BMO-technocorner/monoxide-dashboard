@@ -42,10 +42,9 @@ const Devices = ({}: DevicesProps) => {
   const [opened, setOpened] = useState<DevicesModalType>(null);
   const { data: ListDevicesData, error } = useSWR(
     "device_list",
-    devicesService.getListDevices
+    devicesService.getListDevices,
+    { refreshInterval: 30000 }
   );
-
-  console.log(ListDevicesData);
 
   const handleOpen = (v: DevicesModalType) => setOpened(v);
 

@@ -74,7 +74,6 @@ export default function RoomAddModal({
 
   const handleAddRoom = async (values: any) => {
     setIsLoading(true);
-    console.log(values);
     try {
       const res = await roomsService.addRoom(values);
 
