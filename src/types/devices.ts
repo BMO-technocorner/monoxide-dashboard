@@ -31,6 +31,11 @@ export interface AddDevice {
   roomId: number;
 }
 
+export interface EditDevice {
+  name: string;
+  roomId: number;
+}
+
 export interface ResponseDeleteDevice {
   message: string;
   data: Device;

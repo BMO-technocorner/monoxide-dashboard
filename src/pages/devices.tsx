@@ -1,25 +1,16 @@
-import { DevicesModalType } from "@/components/DevicesModal";
-import {
-  Box,
-  Button,
-  Grid,
-  createStyles,
-  Skeleton,
-  Group,
-  Text,
-} from "@mantine/core";
-import { useModals } from "@mantine/modals";
+import { Box, Button, Grid, createStyles, Skeleton, Text } from "@mantine/core";
 import { useState } from "react";
 import { Plus } from "tabler-icons-react";
 import AppLayout from "@/components/layout/AppLayout";
-import DeviceAddForm from "@/components/DeviceAddForm";
-import DeviceAddMaps from "@/components/DeviceAddMaps";
 import DeviceCard from "@/components/DeviceCard";
 import useSWR from "swr";
 import { devicesService } from "@/services/devices";
 import { Device } from "@/types/devices";
-import { getMinutesBetweenDates } from "../lib/helper";
 import DeviceAddModal from "@/components/DeviceAddModal";
+import { roomsService } from "@/services/rooms";
+import { ResponseListRooms } from "@/types/rooms";
+import DeviceDetailModal from "@/components/DeviceDetailModal";
+import DeviceEditModal from "@/components/DeviceEditModal";
 
 type DevicesProps = {};
 
@@ -39,43 +30,23 @@ const useStyles = createStyles({
 
 const Devices = ({}: DevicesProps) => {
   const { classes, theme } = useStyles();
-  const modals = useModals();
-  const [deviceAddModalOpened, setDeviceAddModalOpened] =
-    useState<boolean>(false);
+  const [modalOpened, setModalOpened] = useState<
+    "edit" | "details" | "add" | null
+  >(null);
 
-  const handleOpen = () => setDeviceAddModalOpened((prevState) => !prevState);
+  const handleOpen = (v: "edit" | "details" | "add" | null) =>
+    setModalOpened(v);
 
-  const { data: ListDevicesData, error } = useSWR(
+  const { data: ListDevicesData } = useSWR(
     "devices_list",
     devicesService.getListDevices,
     { refreshInterval: 30000 }
   );
 
-  const openAddDeviceModal = () =>
-    modals.openConfirmModal({
-      title: "Input Device Information",
-      closeOnConfirm: false,
-      labels: { confirm: "Next", cancel: "Cancel" },
-      confirmProps: {
-        color: "grape",
-        variant: theme.colorScheme === "dark" ? "light" : "filled",
-      },
-      centered: true,
-      children: <DeviceAddForm />,
-      onConfirm: () =>
-        modals.openConfirmModal({
-          title: "Input Device Location",
-          labels: { confirm: "Finish", cancel: "Back" },
-          confirmProps: {
-            color: "grape",
-            variant: theme.colorScheme === "dark" ? "light" : "filled",
-          },
-          closeOnConfirm: false,
-          centered: true,
-          children: <DeviceAddMaps />,
-          onConfirm: () => modals.closeAll(),
-        }),
-    });
+  const { data: ListRoomsData, error } = useSWR(
+    "rooms_list",
+    roomsService.getListRooms
+  );
 
   return (
     <AppLayout
@@ -83,7 +54,7 @@ const Devices = ({}: DevicesProps) => {
       headingCustom={
         <Button
           leftIcon={<Plus size={14} />}
-          onClick={handleOpen}
+          onClick={() => handleOpen("add")}
           variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
@@ -91,7 +62,20 @@ const Devices = ({}: DevicesProps) => {
         </Button>
       }
     >
-      <DeviceAddModal opened={deviceAddModalOpened} handleOpen={handleOpen} />
+      <DeviceAddModal
+        opened={modalOpened === "add"}
+        handleOpen={handleOpen}
+        roomsData={ListRoomsData as ResponseListRooms}
+      />
+      <DeviceEditModal
+        opened={modalOpened === "edit"}
+        handleOpen={handleOpen}
+        roomsData={ListRoomsData as ResponseListRooms}
+      />
+      <DeviceDetailModal
+        opened={modalOpened === "details"}
+        handleOpen={handleOpen}
+      />
 
       <Box className={classes.contentWrapper}>
         {!ListDevicesData ? (
@@ -107,7 +91,7 @@ const Devices = ({}: DevicesProps) => {
           <Text size="xs">No device found</Text>
         ) : (
           <Grid>
-            {ListDevicesData?.map((device: Device) => (
+            {ListDevicesData.map((device: Device) => (
               <Grid.Col lg={4} md={6} xs={6} key={device.id}>
                 <Box className={classes.cardWrapper}>
                   <DeviceCard data={device} handleOpen={handleOpen} />

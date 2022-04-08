@@ -1,13 +1,12 @@
 import { getMinutesBetweenDates } from "@/lib/helper";
 import { Device } from "@/types/devices";
 import { Badge, Box, Card, createStyles, Image, Text } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
-import React from "react";
-import { DevicesModalType } from "./DevicesModal";
+import React, { Fragment } from "react";
+import { useRouter } from "next/router";
 
 type DeviceCardProps = {
   data: Device;
-  handleOpen: (v: DevicesModalType) => void;
+  handleOpen: (v: "add" | "edit" | "details" | null) => void;
 };
 
 const useStyles = createStyles((theme) => {
@@ -96,51 +95,55 @@ const DeviceCard = ({ data, handleOpen }: DeviceCardProps) => {
   const { classes } = useStyles();
   const deviceIdleTime = getMinutesBetweenDates(data.deviceSync.updatedAt);
   const deviceStatus = deviceIdleTime <= 1 ? "Online" : "Offline";
+  const router = useRouter();
 
   return (
-    <Card className={classes.card}>
-      {/* Static background */}
-      <Box className={classes.staticBgRound} />
-      <Box className={classes.staticBgSquare} />
+    <Fragment>
+      <Card
+        className={classes.card}
+        onClick={() => {
+          router.push(
+            `${router.pathname}`,
+            `${router.pathname}/?id=${data.id}`,
+            {
+              shallow: true,
+            }
+          );
+          handleOpen("details");
+        }}
+      >
+        {/* Static background */}
+        <Box className={classes.staticBgRound} />
+        <Box className={classes.staticBgSquare} />
 
-      {/* Device Image */}
-      <Box className={classes.deviceImageWrapper}>
-        <Box sx={{ position: "relative" }}>
-          <Image
-            src="/images/device-image.png"
-            alt="Device"
-            fit="contain"
-            width={100}
-            height={100}
-          />
-          <Box className={classes.deviceImageStatusWrapper}>
-            {/* <Tooltip
-              label={
-                device.status.power
-                  ? `Device Online - ${device.status.timeline.length} alerts`
-                  : `Device Offline - ${device.status.timeline.length} alerts`
-              }
-              withArrow
-              transition='fade'
-              transitionDuration={200}
-            >
-          </Tooltip> */}
-            <Badge
-              color={deviceStatus === "Online" ? "green" : "red"}
-              variant="dot"
-              className={classes.deviceImageStatusBadge}
-            >
-              {deviceStatus}
-            </Badge>
+        {/* Device Image */}
+        <Box className={classes.deviceImageWrapper}>
+          <Box sx={{ position: "relative" }}>
+            <Image
+              src="/images/device-image.png"
+              alt="Device"
+              fit="contain"
+              width={100}
+              height={100}
+            />
+            <Box className={classes.deviceImageStatusWrapper}>
+              <Badge
+                color={deviceStatus === "Online" ? "green" : "red"}
+                variant="dot"
+                className={classes.deviceImageStatusBadge}
+              >
+                {deviceStatus}
+              </Badge>
+            </Box>
           </Box>
         </Box>
-      </Box>
 
-      {/* Card content */}
-      <Box className={classes.contentWrapper}>
-        <Text className={classes.deviceNameText}>{data.name}</Text>
-      </Box>
-    </Card>
+        {/* Card content */}
+        <Box className={classes.contentWrapper}>
+          <Text className={classes.deviceNameText}>{data.name}</Text>
+        </Box>
+      </Card>
+    </Fragment>
   );
 };
 

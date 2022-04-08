@@ -1,33 +1,27 @@
 import { devicesService } from "@/services/devices";
-import { roomsService } from "@/services/rooms";
 import {
-  Anchor,
   Button,
-  Center,
   createStyles,
   Group,
   Modal,
   Select,
-  SelectItem,
-  Text,
   TextInput,
-  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useState } from "react";
-import useSWR, { mutate } from "swr";
-import { InfoCircle } from "tabler-icons-react";
+import { mutate } from "swr";
 import { z } from "zod";
-import { ResponseListRooms } from "../types/rooms";
+import { useRouter } from "next/router";
+import { ResponseListRooms } from "@/types/rooms";
+import { getQueryVariable } from "@/lib/helper";
 
-const addRoomsSchema = z.object({
+const editDeviceSchema = z.object({
   name: z.string().nonempty().min(2, "Device name must be 2 character or more"),
-  uid: z.string().nonempty().min(2, "Device uid must be 36 character or more"),
   roomId: z.number().positive(),
 });
 
-type DeviceAddModalProps = {
+type DeviceEditModalProps = {
   roomsData: ResponseListRooms;
   opened: boolean;
   handleOpen: (v: "edit" | "details" | "add" | null) => void;
@@ -68,27 +62,32 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function DeviceAddModal({
+export default function DeviceEditModal({
   roomsData,
   opened,
   handleOpen,
-}: DeviceAddModalProps) {
+}: DeviceEditModalProps) {
   const { classes } = useStyles();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const id = getQueryVariable("id");
   const theme = useMantineTheme();
   const form = useForm({
-    schema: zodResolver(addRoomsSchema),
+    schema: zodResolver(editDeviceSchema),
     initialValues: {
-      uid: "",
       roomId: "",
       name: "",
     },
   });
 
-  const handleAddRoom = async (values: any) => {
+  const handleEditDevice = async (values: any) => {
     setIsLoading(true);
     try {
-      const res = await devicesService.addDevice(values);
+      console.log(values);
+
+      const res = await devicesService.editDevice(id as string, values);
+
+      console.log(res);
 
       form.reset();
 
@@ -96,9 +95,15 @@ export default function DeviceAddModal({
 
       setIsLoading(false);
       handleOpen(null);
+      router.push(`/devices`, undefined, {
+        shallow: true,
+      });
     } catch (err) {
       console.error(err);
       setIsLoading(false);
+      router.push(`/devices`, undefined, {
+        shallow: true,
+      });
     }
   };
 
@@ -110,32 +115,16 @@ export default function DeviceAddModal({
   return (
     <Modal
       opened={opened}
-      onClose={() => handleOpen(null)}
-      title="Create New Device"
+      onClose={() => {
+        router.push(`/devices`, undefined, {
+          shallow: true,
+        });
+        handleOpen(null);
+      }}
+      title="Create Edit Device"
       centered
     >
-      <form onSubmit={form.onSubmit(handleAddRoom)} className={classes.form}>
-        <TextInput
-          required
-          rightSection={
-            <Tooltip
-              label="Device ID shown at the bottom of the device"
-              placement="end"
-              withArrow
-              transition="pop-bottom-right"
-            >
-              <Text color="dimmed" sx={{ cursor: "help" }}>
-                <Center>
-                  <InfoCircle size={18} />
-                </Center>
-              </Text>
-            </Tooltip>
-          }
-          label="Device ID"
-          placeholder="37981102-8f04..."
-          classNames={classes}
-          {...form.getInputProps("uid")}
-        />
+      <form onSubmit={form.onSubmit(handleEditDevice)} className={classes.form}>
         <TextInput
           required
           label="Device Name"
@@ -160,7 +149,7 @@ export default function DeviceAddModal({
             variant={theme.colorScheme === "dark" ? "light" : "filled"}
             color="grape"
           >
-            Add Room
+            Edit Device
           </Button>
         </Group>
       </form>
