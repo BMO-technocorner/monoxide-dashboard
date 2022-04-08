@@ -15,4 +15,6 @@
 
 Monoxide Ecosystem's mobile-optimized frontend that took all the right vitamins.
 
-> Written in [Typescript](https://www.typescriptlang.org) using [Next](https://nextjs.org) and [React](https://reactjs.org). Powered by [Netlify](https://www.netlify.com).
+![Preview](https://user-images.githubusercontent.com/24422019/162359777-c2588d7b-5719-47f7-8e6d-d86e683c9731.png)
+
+> Written in [TypeScript](https://www.typescriptlang.org) using [Next](https://nextjs.org) and [React](https://reactjs.org). Powered by [Netlify](https://www.netlify.com).
