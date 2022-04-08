@@ -14,6 +14,7 @@ import { useHotkeys } from "@mantine/hooks";
 import { getCookie, setCookies } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
 import { AuthProvider } from "@/store/AuthContext";
+import { NotificationsProvider } from "@mantine/notifications";
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
@@ -134,9 +135,11 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
             withNormalizeCSS
           >
             <ModalsProvider>
-              <NextProgress color={theme.colors.grape[5]} />
-              <Fonts />
-              <Component {...pageProps} />
+              <NotificationsProvider>
+                <NextProgress color={theme.colors.grape[5]} />
+                <Fonts />
+                <Component {...pageProps} />
+              </NotificationsProvider>
             </ModalsProvider>
           </MantineProvider>
         </ColorSchemeProvider>

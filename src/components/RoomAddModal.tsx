@@ -77,6 +77,8 @@ export default function RoomAddModal({
     try {
       const res = await roomsService.addRoom(values);
 
+      form.reset();
+
       mutate("rooms_list");
 
       setIsLoading(false);
@@ -88,7 +90,12 @@ export default function RoomAddModal({
   };
 
   return (
-    <Modal opened={opened} onClose={handleOpen} title="Create New Room">
+    <Modal
+      opened={opened}
+      onClose={handleOpen}
+      title="Create New Room"
+      centered
+    >
       <form onSubmit={form.onSubmit(handleAddRoom)} className={classes.form}>
         <TextInput
           required

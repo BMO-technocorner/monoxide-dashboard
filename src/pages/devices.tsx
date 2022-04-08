@@ -99,7 +99,7 @@ const Devices = ({}: DevicesProps) => {
             </Grid.Col>
           </Grid>
         ) : ListDevicesData.length === 0 ? (
-          <Text>No device found</Text>
+          <Text size="xs">No device found</Text>
         ) : (
           <Grid>
             {ListDevicesData?.map((device: Device) => (

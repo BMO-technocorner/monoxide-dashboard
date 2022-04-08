@@ -13,6 +13,9 @@ import {
 } from "@mantine/core";
 import { Pencil, Trash } from "tabler-icons-react";
 import { ResponseListRooms } from "@/types/rooms";
+import { roomsService } from "@/services/rooms";
+import { mutate } from "swr";
+import { showNotification, updateNotification } from "@mantine/notifications";
 
 interface UsersTableProps {
   data: ResponseListRooms;
@@ -20,8 +23,48 @@ interface UsersTableProps {
 }
 
 export default function UsersTable({ data, editModal }: UsersTableProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const rows = data?.map((item) => {
     const id = item.id.toString();
+
+    const handleDeleteRoom = async (values: any) => {
+      setIsLoading(true);
+      showNotification({
+        id: "delete_room",
+        title: "Deleting",
+        message: "Please wait for the data to be deleted",
+        loading: true,
+        disallowClose: true,
+      });
+      try {
+        const res = await roomsService.removeRoom(id);
+
+        mutate("rooms_list");
+
+        updateNotification({
+          id: "delete_room",
+          title: "Done",
+          message: `Room ${id} deleted!`,
+          loading: false,
+          disallowClose: false,
+          autoClose: 3000,
+          color: "grape",
+        });
+        setIsLoading(false);
+      } catch (err) {
+        updateNotification({
+          id: "delete_room",
+          title: "Error",
+          message: err as string,
+          loading: false,
+          disallowClose: false,
+          autoClose: 3000,
+          color: "red",
+        });
+        setIsLoading(false);
+      }
+    };
 
     return (
       <tr key={id}>
@@ -38,7 +81,11 @@ export default function UsersTable({ data, editModal }: UsersTableProps) {
               <Pencil size={16} />
             </ActionIcon>
             <Menu transition="pop" withArrow placement="end">
-              <Menu.Item icon={<Trash size={16} />} color="red">
+              <Menu.Item
+                icon={<Trash size={16} />}
+                color="red"
+                onClick={handleDeleteRoom}
+              >
                 Remove room
               </Menu.Item>
             </Menu>

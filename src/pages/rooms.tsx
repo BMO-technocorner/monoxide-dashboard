@@ -56,13 +56,15 @@ const Rooms = ({}: RoomsProps) => {
     >
       <RoomAddModal opened={roomAddOpened} handleOpen={handleOpen} />
       <Box className={classes.contentWrapper}>
-        {ListRoomsData ? (
+        {!ListRoomsData ? (
+          <Skeleton width="100%" height={32} />
+        ) : ListRoomsData.length === 0 ? (
+          <Text>No rooms found</Text>
+        ) : (
           <RoomsTable
             data={ListRoomsData as ResponseListRooms}
             editModal={() => console.log("Edit")}
           />
-        ) : (
-          <Skeleton width="100%" height={32} />
         )}
       </Box>
     </AppLayout>
