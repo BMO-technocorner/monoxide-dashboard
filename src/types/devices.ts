@@ -24,3 +24,14 @@ export interface DeviceSync {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface AddDevice {
+  name: string;
+  uid: string;
+  roomId: number;
+}
+
+export interface ResponseDeleteDevice {
+  message: string;
+  data: Device;
+}

@@ -31,9 +31,9 @@ const useStyles = createStyles({
 
 const Rooms = ({}: RoomsProps) => {
   const { classes, theme } = useStyles();
-  const [roomAddOpened, setRoomAddOpened] = useState<boolean>(false);
+  const [roomAddModalOpened, setRoomAddModalOpened] = useState<boolean>(false);
 
-  const handleOpen = () => setRoomAddOpened((prevState) => !prevState);
+  const handleOpen = () => setRoomAddModalOpened((prevState) => !prevState);
 
   const { data: ListRoomsData, error } = useSWR(
     "rooms_list",
@@ -54,7 +54,7 @@ const Rooms = ({}: RoomsProps) => {
         </Button>
       }
     >
-      <RoomAddModal opened={roomAddOpened} handleOpen={handleOpen} />
+      <RoomAddModal opened={roomAddModalOpened} handleOpen={handleOpen} />
       <Box className={classes.contentWrapper}>
         {!ListRoomsData ? (
           <Skeleton width="100%" height={32} />

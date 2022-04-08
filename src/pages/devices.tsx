@@ -19,6 +19,7 @@ import useSWR from "swr";
 import { devicesService } from "@/services/devices";
 import { Device } from "@/types/devices";
 import { getMinutesBetweenDates } from "../lib/helper";
+import DeviceAddModal from "@/components/DeviceAddModal";
 
 type DevicesProps = {};
 
@@ -39,14 +40,16 @@ const useStyles = createStyles({
 const Devices = ({}: DevicesProps) => {
   const { classes, theme } = useStyles();
   const modals = useModals();
-  const [opened, setOpened] = useState<DevicesModalType>(null);
+  const [deviceAddModalOpened, setDeviceAddModalOpened] =
+    useState<boolean>(false);
+
+  const handleOpen = () => setDeviceAddModalOpened((prevState) => !prevState);
+
   const { data: ListDevicesData, error } = useSWR(
-    "device_list",
+    "devices_list",
     devicesService.getListDevices,
     { refreshInterval: 30000 }
   );
-
-  const handleOpen = (v: DevicesModalType) => setOpened(v);
 
   const openAddDeviceModal = () =>
     modals.openConfirmModal({
@@ -80,7 +83,7 @@ const Devices = ({}: DevicesProps) => {
       headingCustom={
         <Button
           leftIcon={<Plus size={14} />}
-          onClick={openAddDeviceModal}
+          onClick={handleOpen}
           variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
@@ -88,6 +91,8 @@ const Devices = ({}: DevicesProps) => {
         </Button>
       }
     >
+      <DeviceAddModal opened={deviceAddModalOpened} handleOpen={handleOpen} />
+
       <Box className={classes.contentWrapper}>
         {!ListDevicesData ? (
           <Grid>
