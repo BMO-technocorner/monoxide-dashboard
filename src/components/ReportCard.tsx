@@ -96,20 +96,8 @@ const ReportCard = ({ data, handleOpen }: ReportCardProps) => {
             Severity
           </Text>
           {
-            <Badge
-              color={
-                data?.detectionLevel === 1
-                  ? "red"
-                  : data?.detectionLevel === 2
-                  ? "orange"
-                  : "yellow"
-              }
-            >
-              {data?.detectionLevel === 1
-                ? "HIGH"
-                : data?.detectionLevel === 2
-                ? "MEDIUM"
-                : "LOW"}
+            <Badge color={data?.detectionLevel === "HIGH" ? "red" : "yellow"}>
+              {data?.detectionLevel === "HIGH" ? "HIGH" : "LOW"}
             </Badge>
           }
         </Box>
@@ -140,8 +128,7 @@ const ReportCard = ({ data, handleOpen }: ReportCardProps) => {
             />
           </Text>
         </Box>
-        {/* @ts-ignore */}
-        {data?.status === "OPEN" && (
+        {data?.status === "OPEN" ? (
           <Group spacing={"xs"}>
             <Tooltip
               label="Reject report"
@@ -192,6 +179,18 @@ const ReportCard = ({ data, handleOpen }: ReportCardProps) => {
               </ActionIcon>
             </Tooltip>
           </Group>
+        ) : (
+          <Badge
+            color={
+              data?.status === "CLOSED"
+                ? "yellow"
+                : data?.status === "ACCEPTED"
+                ? "green"
+                : "blue"
+            }
+          >
+            {data?.status}
+          </Badge>
         )}
       </Box>
     </Card>

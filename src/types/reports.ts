@@ -20,20 +20,8 @@ export interface EditReport {
 
 export type ResponseListReports = Report[];
 
-export enum ReportStatus {
-  "OPEN",
-  "ACCEPTED",
-  "CLOSED",
-  "DONE",
-}
+export type ReportStatus = "OPEN" | "ACCEPTED" | "CLOSED" | "DONE";
 
-export enum ReportLevel {
-  "CLIENT",
-  "GUARD",
-}
+export type ReportLevel = "CLIENT" | "GUARD";
 
-export enum ReportDetectionLevel {
-  "LOW",
-  "MEDIUM",
-  "HIGH",
-}
+export type ReportDetectionLevel = "LOW" | "HIGH";
