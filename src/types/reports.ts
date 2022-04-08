@@ -1,14 +1,24 @@
-export interface ResponseReport {
+import { Device } from "./devices";
+import { UserProfile } from "./profile";
+
+export interface Report {
   id: number;
-  ownerId: number;
   message: null | string;
   status: ReportStatus;
   level: ReportLevel;
   detectionLevel: ReportDetectionLevel;
-  deviceId: number;
   createdAt: string;
   updatedAt: string;
+  device: Device;
+  owner: UserProfile;
 }
+
+export interface EditReport {
+  status: string;
+  message: string;
+}
+
+export type ResponseListReports = Report[];
 
 export enum ReportStatus {
   "OPEN",

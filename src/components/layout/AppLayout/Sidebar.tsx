@@ -77,7 +77,6 @@ const useStyles = createStyles((theme) => ({
           ? theme.colors.dark[8]
           : theme.colors.gray[1],
     },
-    // border: `1px solid ${theme.colorScheme === 'dark' ? '#2C2E33' : 'none'}`,
   },
 
   userButtonTextWrapper: {
@@ -138,10 +137,12 @@ const UserButton = forwardRef<HTMLButtonElement>(({ ...others }, ref) => {
 });
 
 export default function Sidebar({ opened }: SidebarProps) {
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
   const router = useRouter();
   const largeScreen = useMediaQuery("(min-width: 1000px)");
   const dispatch = useAuthDispatch();
+
+  const { user } = useAuthState();
 
   const isActive = (link: string) => router.pathname === link;
 
@@ -151,7 +152,16 @@ export default function Sidebar({ opened }: SidebarProps) {
     removeCookies("token");
   };
 
-  const renderLinks = appLinks.map((item) => (
+  const roleLinks =
+    user?.role === "CLIENT"
+      ? ["/", "/rooms", "/devices", "/reports", "/settings"]
+      : ["/", "/users", "/reports", "/settings"];
+
+  const linksRendered = appLinks.filter((link) =>
+    roleLinks.includes(link.path)
+  );
+
+  const renderLinks = linksRendered.map((item) => (
     <Box
       key={item.label}
       p="md"

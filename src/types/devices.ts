@@ -1,5 +1,5 @@
 import { UserProfile } from "./profile";
-import { ResponseReport } from "./report";
+import { Report } from "./reports";
 import { ResponseAddRoom } from "./rooms";
 
 export interface Device {
@@ -13,7 +13,7 @@ export interface Device {
   owner: UserProfile;
   room: ResponseAddRoom;
   deviceSync: DeviceSync;
-  reports: ResponseReport[];
+  reports: Report[];
 }
 
 export type ResponseListDevices = Device[];

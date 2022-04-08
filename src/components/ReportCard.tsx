@@ -1,3 +1,4 @@
+import { Report, ReportStatus } from "@/types/reports";
 import {
   ActionIcon,
   Badge,
@@ -10,44 +11,15 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { useModals } from "@mantine/modals";
 import dayjs from "dayjs";
+import { useRouter } from "next/router";
 import React from "react";
-import { Check, ExternalLink, PhoneCall } from "tabler-icons-react";
+import { Check, PhoneCall, X } from "tabler-icons-react";
 import TimeAgo from "timeago-react";
-import { ReportModalType } from "./ReportModal";
-
-type DataProps = {
-  id: string;
-  code: number;
-  message: string;
-  createdAt: string;
-  updatedAt: string;
-  device: {
-    id: string;
-    name: string;
-    location: {
-      lng: number;
-      lat: number;
-      geocode: string;
-    };
-    contact: {
-      id: string;
-      name: string;
-      phoneNumber: string;
-    }[];
-  };
-};
 
 type ReportCardProps = {
-  user: {
-    id: string;
-    name: string;
-    avatar: string;
-  };
-  status: DataProps[];
-  data: DataProps;
-  handleOpen: (v: ReportModalType) => void;
+  data: Report;
+  handleOpen: (v: "accept" | "reject" | null) => void;
 };
 
 const useStyles = createStyles((theme) => {
@@ -111,78 +83,50 @@ const useStyles = createStyles((theme) => {
   };
 });
 
-const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
+const ReportCard = ({ data, handleOpen }: ReportCardProps) => {
   const { classes, theme } = useStyles();
   const largeScreen = useMediaQuery("(min-width: 900px)");
-  const modals = useModals();
-
-  const openResolveConfirmModal = () =>
-    modals.openConfirmModal({
-      title: "Please confirm your action",
-      children: (
-        <Text size="sm">
-          This action is so important that you are required to confirm it with a
-          modal. Please click one of these buttons to proceed.
-        </Text>
-      ),
-      centered: true,
-      labels: { confirm: "Confirm", cancel: "Cancel" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
-    });
+  const router = useRouter();
 
   return (
     <Card p={16} className={classes.card}>
       <Box className={classes.mainSection}>
-        <Box>
-          <Text
-            size={largeScreen ? "sm" : "xs"}
-            className={classes.messageText}
-          >
-            {data.message}
-          </Text>
-        </Box>
         <Box className={classes.severityWrapper}>
           <Text size="xs" color="dimmed">
             Severity
           </Text>
-          {status.map((stat) => (
+          {
             <Badge
-              key={stat.id}
               color={
-                stat.code === 1 ? "red" : stat.code === 2 ? "orange" : "yellow"
+                data?.detectionLevel === 1
+                  ? "red"
+                  : data?.detectionLevel === 2
+                  ? "orange"
+                  : "yellow"
               }
             >
-              {stat.code === 1 ? "HIGH" : stat.code === 2 ? "MEDIUM" : "LOW"}
+              {data?.detectionLevel === 1
+                ? "HIGH"
+                : data?.detectionLevel === 2
+                ? "MEDIUM"
+                : "LOW"}
             </Badge>
-          ))}
+          }
         </Box>
         <Box className={classes.reportedWrapper}>
           <Box>
             <Text size="xs" color="dimmed">
               Reported from / by
             </Text>
-            <Text size={largeScreen ? "sm" : "xs"}>{user.name}</Text>
+            <Text size={largeScreen ? "sm" : "xs"}>{data?.owner?.name}</Text>
           </Box>
           <Divider />
           <Box>
             <Text size="xs" color="dimmed">
               Location
             </Text>
-            <Box<"a">
-              className={classes.placeWrapper}
-              component="a"
-              href={`https://maps.google.com/?q=${data.device.location.lat},${data.device.location.lng}`}
-              target="_blank"
-            >
-              <Text
-                color={theme.colorScheme === "dark" ? "dimmed" : "#000"}
-                className={classes.placeText}
-              >
-                {data.device.location.geocode}
-              </Text>
-              <ExternalLink color="#909296" size={12} />
-            </Box>
+
+            <Text size="xs">{data?.device.name}</Text>
           </Box>
         </Box>
       </Box>
@@ -191,43 +135,64 @@ const ReportCard = ({ data, status, user, handleOpen }: ReportCardProps) => {
         <Box>
           <Text size="xs" color="dimmed">
             <TimeAgo
-              datetime={data.createdAt}
-              title={dayjs(data.createdAt).format("ddd, MMM D, YYYY h:mm A")}
+              datetime={data?.createdAt}
+              title={dayjs(data?.createdAt).format("ddd, MMM D, YYYY h:mm A")}
             />
           </Text>
         </Box>
-        <Group spacing={"xs"}>
-          <Tooltip
-            label="Call emergency contacts"
-            withArrow
-            transition="fade"
-            transitionDuration={200}
-          >
-            <ActionIcon
-              variant={theme.colorScheme === "dark" ? "light" : "filled"}
-              color="red"
-              size={"lg"}
-              onClick={() => handleOpen("contact")}
+        {/* @ts-ignore */}
+        {data?.status === "OPEN" && (
+          <Group spacing={"xs"}>
+            <Tooltip
+              label="Reject report"
+              withArrow
+              transition="fade"
+              transitionDuration={200}
             >
-              <PhoneCall size={16} />
-            </ActionIcon>
-          </Tooltip>
-          <Tooltip
-            label="Resolve report"
-            withArrow
-            transition="fade"
-            transitionDuration={200}
-          >
-            <ActionIcon
-              variant={theme.colorScheme === "dark" ? "light" : "filled"}
-              color="green"
-              size={"lg"}
-              onClick={openResolveConfirmModal}
+              <ActionIcon
+                variant={theme.colorScheme === "dark" ? "light" : "filled"}
+                color="red"
+                size={"lg"}
+                onClick={() => {
+                  router.push(
+                    `${router.pathname}`,
+                    `${router.pathname}/?id=${data?.id}`,
+                    {
+                      shallow: true,
+                    }
+                  );
+                  handleOpen("reject");
+                }}
+              >
+                <X size={16} />
+              </ActionIcon>
+            </Tooltip>
+            <Tooltip
+              label="Accept report"
+              withArrow
+              transition="fade"
+              transitionDuration={200}
             >
-              <Check size={16} />
-            </ActionIcon>
-          </Tooltip>
-        </Group>
+              <ActionIcon
+                variant={theme.colorScheme === "dark" ? "light" : "filled"}
+                color="green"
+                size={"lg"}
+                onClick={() => {
+                  router.push(
+                    `${router.pathname}`,
+                    `${router.pathname}/?id=${data?.id}`,
+                    {
+                      shallow: true,
+                    }
+                  );
+                  handleOpen("accept");
+                }}
+              >
+                <Check size={16} />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
+        )}
       </Box>
     </Card>
   );
