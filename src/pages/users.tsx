@@ -1,7 +1,6 @@
 import AppLayout from "@/components/layout/AppLayout";
 import UsersTable from "@/components/UsersTable";
 import { Box, createStyles } from "@mantine/core";
-import React from "react";
 
 type UsersProps = {};
 

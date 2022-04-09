@@ -1,22 +1,11 @@
 import AppLayout from "@/components/layout/AppLayout";
 import RoomAddModal from "@/components/RoomAddModal";
-import RoomAddForm from "@/components/RoomAddModal";
 import RoomsTable from "@/components/RoomsTable";
 import { roomsService } from "@/services/rooms";
-import {
-  Box,
-  Button,
-  createStyles,
-  Skeleton,
-  Text,
-  TextInput,
-} from "@mantine/core";
-import { useForm, zodResolver } from "@mantine/form";
-import { useModals } from "@mantine/modals";
+import { Box, Button, createStyles, Skeleton, Text } from "@mantine/core";
 import React, { useState } from "react";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { Plus } from "tabler-icons-react";
-import { z } from "zod";
 import { ResponseListRooms } from "../types/rooms";
 
 type RoomsProps = {};

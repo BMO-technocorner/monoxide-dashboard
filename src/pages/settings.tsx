@@ -3,7 +3,6 @@ import { Box, createStyles } from "@mantine/core";
 import React from "react";
 import SettingsAccountCard from "@/components/SettingsAccountCard";
 import SettingsPasswordCard from "@/components/SettingsPasswordCard";
-import ThemeToggle from "@/components/ThemeToggle";
 import SettingsThemeCard from "@/components/SettingsThemeCard";
 
 type SettingsProps = {};

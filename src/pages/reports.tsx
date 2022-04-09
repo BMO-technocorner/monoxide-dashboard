@@ -1,8 +1,6 @@
 import AppLayout from "@/components/layout/AppLayout";
-import { ReportData } from "@/constants/report-data";
 import { Box, Skeleton, Text } from "@mantine/core";
 import React, { useState } from "react";
-import ReportModal, { ReportModalType } from "@/components/ReportModal";
 import ReportCard from "@/components/ReportCard";
 import useSWR from "swr";
 import { reportsService } from "@/services/reports";
