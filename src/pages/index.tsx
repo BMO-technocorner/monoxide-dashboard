@@ -2,7 +2,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import StatsGrid from "@/components/UserStatsGrid";
 import { statisticsClientService } from "@/services/statistics";
 import { ResponseStatisticsClientData } from "@/types/statistics";
-import { Box } from "@mantine/core";
+import { Box, Skeleton } from "@mantine/core";
 import useSWR from "swr";
 
 const Overview = () => {
@@ -15,7 +15,11 @@ const Overview = () => {
   return (
     <AppLayout title="Overview">
       <Box sx={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <StatsGrid data={StatsData as ResponseStatisticsClientData} />
+        {!StatsData ? (
+          <Skeleton width="50%" height={94} />
+        ) : (
+          <StatsGrid data={StatsData as ResponseStatisticsClientData} />
+        )}
       </Box>
     </AppLayout>
   );
