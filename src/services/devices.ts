@@ -1,6 +1,7 @@
 import axiosClient from "@/config/axios";
 import {
   AddDevice,
+  Device,
   EditDevice,
   ResponseDeleteDevice,
   ResponseListDevices,
@@ -25,7 +26,11 @@ export const devicesService = {
     id: number | string,
     body: EditDevice
   ): Promise<ResponseListDevices> {
-    return axiosClient.post(`${url}/?id=${id}`, body);
+    return axiosClient.put(`${url}?id=${id}`, body);
+  },
+
+  getDeviceById(id: number): Promise<Device> {
+    return axiosClient.get(`${url}?id=${id}`);
   },
 };
 

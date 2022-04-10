@@ -1,8 +1,10 @@
-import { getMinutesBetweenDates } from "@/lib/helper";
+import { getMinutesBetweenDates, getQueryVariable } from "@/lib/helper";
 import { Device } from "@/types/devices";
 import { Badge, Box, Card, createStyles, Image, Text } from "@mantine/core";
 import React, { Fragment } from "react";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import { devicesService } from "@/services/devices";
 
 type DeviceCardProps = {
   data: Device;

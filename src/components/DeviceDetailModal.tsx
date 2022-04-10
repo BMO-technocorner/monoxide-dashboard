@@ -1,6 +1,8 @@
-import { Device } from "@/types/devices";
+import { getQueryVariable } from "@/lib/helper";
+import { devicesService } from "@/services/devices";
 import { Button, createStyles, Group, Modal, Text } from "@mantine/core";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 
 type DeviceDetailModalProps = {
   opened: boolean;
@@ -22,6 +24,13 @@ export default function DeviceDetailModal({
 }: DeviceDetailModalProps) {
   const { classes, theme } = useStyles();
   const router = useRouter();
+  const id = getQueryVariable("id");
+
+  const { data: DeviceData } = useSWR(
+    ["devices_data", id],
+    // @ts-ignore
+    devicesService.getDeviceById(id)
+  );
 
   return (
     <Modal
@@ -35,7 +44,7 @@ export default function DeviceDetailModal({
       title="Device Details"
       centered
     >
-      <Text>Test</Text>
+      <Text>{DeviceData?.name}</Text>
 
       <Group position="right">
         <Button

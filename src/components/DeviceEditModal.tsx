@@ -101,9 +101,6 @@ export default function DeviceEditModal({
     } catch (err) {
       console.error(err);
       setIsLoading(false);
-      router.push(`/devices`, undefined, {
-        shallow: true,
-      });
     }
   };
 
@@ -119,6 +116,7 @@ export default function DeviceEditModal({
         router.push(`/devices`, undefined, {
           shallow: true,
         });
+        form.reset();
         handleOpen(null);
       }}
       title="Edit Device"
