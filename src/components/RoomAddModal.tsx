@@ -20,7 +20,7 @@ const addRoomsSchema = z.object({
 
 type RoomAddModalProps = {
   opened: boolean;
-  handleOpen: () => void;
+  handleOpen: (v: "edit" | "add" | null) => void;
 };
 
 const useStyles = createStyles((theme) => ({
@@ -82,7 +82,7 @@ export default function RoomAddModal({
       mutate("rooms_list");
 
       setIsLoading(false);
-      handleOpen();
+      handleOpen(null);
     } catch (err) {
       console.error(err);
       setIsLoading(false);
@@ -92,7 +92,7 @@ export default function RoomAddModal({
   return (
     <Modal
       opened={opened}
-      onClose={handleOpen}
+      onClose={() => handleOpen(null)}
       title="Create New Room"
       centered
     >

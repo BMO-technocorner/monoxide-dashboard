@@ -1,5 +1,6 @@
 import AppLayout from "@/components/layout/AppLayout";
 import RoomAddModal from "@/components/RoomAddModal";
+import RoomEditModal from "@/components/RoomEditModal";
 import RoomsTable from "@/components/RoomsTable";
 import { roomsService } from "@/services/rooms";
 import { Box, Button, createStyles, Skeleton, Text } from "@mantine/core";
@@ -20,9 +21,9 @@ const useStyles = createStyles({
 
 const Rooms = ({}: RoomsProps) => {
   const { classes, theme } = useStyles();
-  const [roomAddModalOpened, setRoomAddModalOpened] = useState<boolean>(false);
+  const [modalOpened, setModalOpened] = useState<"edit" | "add" | null>(null);
 
-  const handleOpen = () => setRoomAddModalOpened((prevState) => !prevState);
+  const handleOpen = (v: "edit" | "add" | null) => setModalOpened(v);
 
   const { data: ListRoomsData, error } = useSWR(
     "rooms_list",
@@ -35,7 +36,7 @@ const Rooms = ({}: RoomsProps) => {
       headingCustom={
         <Button
           leftIcon={<Plus size={14} />}
-          onClick={handleOpen}
+          onClick={() => handleOpen("add")}
           variant={theme.colorScheme === "dark" ? "light" : "filled"}
           color="grape"
         >
@@ -43,7 +44,9 @@ const Rooms = ({}: RoomsProps) => {
         </Button>
       }
     >
-      <RoomAddModal opened={roomAddModalOpened} handleOpen={handleOpen} />
+      <RoomAddModal opened={modalOpened === "add"} handleOpen={handleOpen} />
+      <RoomEditModal opened={modalOpened === "edit"} handleOpen={handleOpen} />
+
       <Box className={classes.contentWrapper}>
         {!ListRoomsData ? (
           <Skeleton width="100%" height={32} />
@@ -52,7 +55,7 @@ const Rooms = ({}: RoomsProps) => {
         ) : (
           <RoomsTable
             data={ListRoomsData as ResponseListRooms}
-            editModal={() => console.log("Edit")}
+            handleOpen={handleOpen}
           />
         )}
       </Box>

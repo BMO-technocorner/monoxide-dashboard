@@ -1,29 +1,27 @@
 import { useState } from "react";
 import {
-  createStyles,
   Table,
-  Checkbox,
   ScrollArea,
   Group,
-  Avatar,
   Text,
   ActionIcon,
   Menu,
-  Skeleton,
 } from "@mantine/core";
 import { Pencil, Trash } from "tabler-icons-react";
 import { ResponseListRooms } from "@/types/rooms";
 import { roomsService } from "@/services/rooms";
 import { mutate } from "swr";
 import { showNotification, updateNotification } from "@mantine/notifications";
+import { useRouter } from "next/router";
 
 interface UsersTableProps {
   data: ResponseListRooms;
-  editModal: () => void;
+  handleOpen: (v: "edit" | "add" | null) => void;
 }
 
-export default function UsersTable({ data, editModal }: UsersTableProps) {
+export default function UsersTable({ data, handleOpen }: UsersTableProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const rows = data?.map((item) => {
     const id = item.id.toString();
@@ -77,7 +75,18 @@ export default function UsersTable({ data, editModal }: UsersTableProps) {
         </td>
         <td>
           <Group spacing={0} position="right">
-            <ActionIcon onClick={editModal}>
+            <ActionIcon
+              onClick={() => {
+                router.push(
+                  `${router.pathname}`,
+                  `${router.pathname}/?id=${id}`,
+                  {
+                    shallow: true,
+                  }
+                );
+                handleOpen("edit");
+              }}
+            >
               <Pencil size={16} />
             </ActionIcon>
             <Menu transition="pop" withArrow placement="end">

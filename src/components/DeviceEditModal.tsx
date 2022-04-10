@@ -121,7 +121,7 @@ export default function DeviceEditModal({
         });
         handleOpen(null);
       }}
-      title="Create Edit Device"
+      title="Edit Device"
       centered
     >
       <form onSubmit={form.onSubmit(handleEditDevice)} className={classes.form}>

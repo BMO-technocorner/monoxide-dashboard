@@ -17,7 +17,7 @@ export const roomsService = {
   },
 
   editRoom(id: number | string, body: AddRoom): Promise<ResponseListRooms> {
-    return axiosClient.post(`${url}?id=${id}`, body);
+    return axiosClient.put(`${url}?id=${id}`, body);
   },
 };
 
